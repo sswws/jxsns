@@ -349,7 +349,7 @@ var _vuex = __webpack_require__(/*! vuex */ 41);function _interopRequireDefault(
         code: [
         {
           validator: function validator(rule, value, callback) {
-            if (_this.loginType !== 'login') {88;
+            if (_this.loginType !== 'login') {
               // 名字长度为 2-10 位
               return value == '8888';
             } else {

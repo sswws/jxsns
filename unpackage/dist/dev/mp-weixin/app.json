@@ -62,6 +62,5 @@
     "uni-nav-bar": "/components/uni-nav-bar/index",
     "login": "/components/login/login",
     "goto-share": "/components/gotoShare/gotoShare"
-  },
-  "sitemapLocation": "sitemap87.json"
+  }
 }

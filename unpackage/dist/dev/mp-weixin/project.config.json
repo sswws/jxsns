@@ -13,19 +13,21 @@
   "libVersion": "",
   "appid": "wx4b6d52f0832bd1f1",
   "projectname": "study",
-  "simulatorType": "wechat",
-  "simulatorPluginLibVersion": {},
   "condition": {
     "search": {
+      "current": -1,
       "list": []
     },
     "conversation": {
+      "current": -1,
       "list": []
     },
     "game": {
+      "current": -1,
       "list": []
     },
     "miniprogram": {
+      "current": -1,
       "list": []
     }
   }
