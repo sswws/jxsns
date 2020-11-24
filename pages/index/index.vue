@@ -207,6 +207,7 @@
 		onPullDownRefresh(){
 			console.log('顶部下拉刷新')
 			this.feedsList = []
+			this.$refs.waterfall.clear()
 			if(this.currentSwiperIndex === 0){
 				this.getFeedsList()
 			}else{

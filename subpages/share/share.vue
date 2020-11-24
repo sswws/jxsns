@@ -7,7 +7,7 @@
     <!-- 内容发布 -->
     <view class="pics">
       <!-- 图片选择及发布相关 -->
-      <template v-if="uploadType == 'photo' ">
+      <template v-if="uploadType == 'imgs' ">
         <view class="medias" v-for="( image, index ) in uploadPicsList" :key="index">
           <image
             class="img"
@@ -187,17 +187,17 @@
 			  });
 			  let images = [];
 			  (await Promise.all(upStatusArr)).map((item) => {
-			    images.push(item.data.node);
+			    images.push({id : item.id});
 			  });
-			  // console.log(images)
+			  
 			  let pres = await this.$u.api.postOneFeed({
 			    feed_content: this.feedInfo,
 			    feed_from: 5,
 			    feed_mark: new Date().getTime(),
 			    images
 			  });
-			  		
-			  if (!!pres && pres.message == "发布成功") {
+			  console.log(pres)
+			  if (!!pres.data && pres.data.message == "发布成功") {
 			    uni.hideToast();
 			    uni.showToast({
 			      title: "动态发布成功",

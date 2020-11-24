@@ -198,7 +198,7 @@
 					code: [
 						{
 							validator: (rule, value, callback) => {
-								if(this.loginType !== 'login'){88
+								if(this.loginType !== 'login'){
 									// 名字长度为 2-10 位
 									return value == '8888'
 								}else{

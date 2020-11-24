@@ -42,7 +42,7 @@ const store = new Vuex.Store({
 		userLoginAction(context, userInfo){
 			context.commit('userLogin', userInfo)
 		},
-		userLogoutAction(context, userInfo){
+		userLogoutAction(context){
 			context.commit('userLogout')
 		}
 	}

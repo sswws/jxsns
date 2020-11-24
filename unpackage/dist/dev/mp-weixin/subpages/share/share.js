@@ -345,7 +345,7 @@ var _uploadFile = _interopRequireDefault(__webpack_require__(/*! @/common/upload
                 });
                 images = [];_context.next = 21;return (
                   Promise.all(upStatusArr));case 21:_context.sent.map(function (item) {
-                  images.push(item.data.node);
+                  images.push({ id: item.id });
                 });_context.next = 24;return (
 
                   _this3.$u.api.postOneFeed({
@@ -354,8 +354,8 @@ var _uploadFile = _interopRequireDefault(__webpack_require__(/*! @/common/upload
                     feed_mark: new Date().getTime(),
                     images: images }));case 24:pres = _context.sent;
 
-
-                if (!!pres && pres.message == "发布成功") {
+                console.log(pres);
+                if (!!pres.data && pres.data.message == "发布成功") {
                   uni.hideToast();
                   uni.showToast({
                     title: "动态发布成功",
@@ -381,7 +381,7 @@ var _uploadFile = _interopRequireDefault(__webpack_require__(/*! @/common/upload
                     duration: 1500 });
 
                   _this3.uploadStatus = false;
-                }case 26:case "end":return _context.stop();}}}, _callee);}))();
+                }case 27:case "end":return _context.stop();}}}, _callee);}))();
 
 
 

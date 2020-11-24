@@ -11,7 +11,7 @@ const uploadFile = async (path, size) => {
     });
   });
   
-  console.log(MD5.md5(hash))
+  // console.log(MD5.md5(hash))
   
   // 第二步 请求获取基础文件信息
   let check = await uni.request({
@@ -25,21 +25,22 @@ const uploadFile = async (path, size) => {
   })
   // 如果返回的状态码是404，那说明没有上传过，继续后面的上传流程
   // 如果返回的是200,那就从body里取出 id，这个id就可以直接使用，后面的上传流程就可以终止了
-  console.log(check[1].statusCode)
+  // console.log(check[1].statusCode)
   
   // 第三步 将文件以buffer流方式存入系统
-  let ures = await uni.request({
-    url: uploadUrl+'/files',
-    method: "POST",
-    header: {
-      'content-type': 'application/x-www-form-urlencggoded;charset=UTF-8',
-      Authorization: "Bearer " + uni.getStorageSync("token"),
-    },
-    data:{
-		file: uni.getFileSystemManager().readFileSync(path)
-	}
-  });
-  console.log(ures)
-  return ures;
+  let ufile = await uni.uploadFile({
+     url: uploadUrl+'/files',
+     method: "POST",
+     header: {
+       'content-type': 'multipart/form-data',
+       Authorization: "Bearer " + uni.getStorageSync("token"),
+     },
+     name: 'file',
+     file: uni.getFileSystemManager().readFileSync(path),
+    filePath: path  
+   });
+   
+   // console.log(JSON.parse(ufile[1].data))
+   return JSON.parse(ufile[1].data)
 };
 export default uploadFile;
