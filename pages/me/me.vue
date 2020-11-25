@@ -146,10 +146,10 @@
 		onLoad() {
 			this.getInfos()
 			// 用户登录后触发数据更新
-			uni.$on('userLogin', this.getInfos)
+			uni.$on('meUserLogin', this.getInfos)
 			
 			// 用户退出后触发数据更新
-			uni.$on('userLogout', () => {
+			uni.$on('meUserLogout', () => {
 				console.log('触发了退出操作')
 				this.feedsList = []
 				this.avatar = ''

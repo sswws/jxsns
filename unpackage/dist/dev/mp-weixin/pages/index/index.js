@@ -351,6 +351,19 @@ var _todoFeed = _interopRequireDefault(__webpack_require__(/*! @/mixins/todoFeed
                 _this.swiperSliderHeight = height;
               });
 
+              uni.$on('indexUserLogin', function () {
+                _this.currentSwiperIndex = 0;
+                _this.feedsList = [];
+                _this.$refs.waterfall.clear();
+                _this.getFeedsList();
+              });
+              uni.$on('indexUserLogout', function () {
+                _this.currentSwiperIndex = 0;
+                _this.feedsList = [];
+                _this.$refs.waterfall.clear();
+                _this.getFeedsList();
+              });
+
               // 发布新的动态后，触发数据更新
               uni.$on("indexFeedsUpdate", function () {
                 _this.currentSwiperIndex = 0;
@@ -373,7 +386,7 @@ var _todoFeed = _interopRequireDefault(__webpack_require__(/*! @/mixins/todoFeed
               // 我们要在这里初始化请求相关数据
               _this.getAdverts();
               _this.getFeedsList();
-              _this.getNewsList();case 7:case "end":return _context.stop();}}}, _callee);}))();
+              _this.getNewsList();case 9:case "end":return _context.stop();}}}, _callee);}))();
 
   },
   onPageScroll: function onPageScroll(event) {

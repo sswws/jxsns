@@ -50,7 +50,10 @@ var _vuex = __webpack_require__(/*! vuex */ 41);function ownKeys(object, enumera
   (0, _vuex.mapActions)(['userLogoutAction'])), {}, {
     logout: function logout() {
       this.userLogoutAction();
-      uni.$emit('userLogout');
+
+      uni.$emit('meUserLogout');
+      uni.$emit('indexUserLogout');
+
       uni.switchTab({
         url: '/pages/me/me' });
 

@@ -426,7 +426,8 @@
 					commented: res.data.user.commented
 				}
 				this.userLoginAction(loginInfo)
-				uni.$emit('userLogin')
+				uni.$emit('meUserLogin')
+				uni.$emit('indexUserLogin')
 			},
 			// 更改 登陆 注册 方式选择
 			sectionChange(index) {

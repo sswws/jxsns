@@ -40,7 +40,10 @@
 			...mapActions(['userLogoutAction']),
 			logout() {
 				this.userLogoutAction()
-				uni.$emit('userLogout')
+				
+				uni.$emit('meUserLogout')
+				uni.$emit('indexUserLogout')
+				
 				uni.switchTab({
 					url: '/pages/me/me'
 				})

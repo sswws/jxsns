@@ -52,9 +52,7 @@
 					// 设置状态
 					this.canRequestFeeds = "no"
 					let res = await this.$u.api.getFeeds()
-					let feeds = res.data.feeds
-					feeds = [...feeds, ...feeds, ...feeds]
-					feeds = feeds.map(item => {
+					let feeds = res.data.feeds.map(item => {
 						return {
 							id: item.id,
 							cover: this.BaseFileURL + item.images[0].file
@@ -72,7 +70,6 @@
 								showArrList.push(this.feedsList.slice(i, i + 6))
 							}
 						}
-						console.log(showArrList)
 						this.showFeedsList = showArrList;
 						let timer = setTimeout(() => {
 							clearTimeout(timer);

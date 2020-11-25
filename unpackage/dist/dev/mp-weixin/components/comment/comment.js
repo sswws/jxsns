@@ -245,8 +245,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
 var _timeFrom = _interopRequireDefault(__webpack_require__(/*! @/tools/timeFrom.js */ 50));
 var _todoFeed = _interopRequireDefault(__webpack_require__(/*! @/mixins/todoFeed.js */ 52));
 var _vuex = __webpack_require__(/*! vuex */ 41);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
@@ -359,25 +357,47 @@ var _vuex = __webpack_require__(/*! vuex */ 41);function _interopRequireDefault(
         this.disableSendCommentTag = false;
       }
     },
+    // 在这里设计 敏感词 鉴定操作
+    doMsgSecCheck: function doMsgSecCheck(text) {
+      return wx.serviceMarket.invokeService({
+        service: 'wxee446d7507c68b11',
+        api: 'msgSecCheck',
+        data: {
+          "Action": "TextApproval",
+          "Text": text } });
+
+
+    },
     // 发送评论信息
-    sendComment: function sendComment() {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:if (!
+    sendComment: function sendComment() {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var cres;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:if (!
 
                 _this4.disableSendCommentTag) {_context4.next = 2;break;}return _context4.abrupt("return");case 2:
-                _this4.disableSendCommentTag = true;if (!(
-                _this4.type === 'feed')) {_context4.next = 10;break;}_context4.next = 6;return (
+                _this4.disableSendCommentTag = true;
+
+                // 敏感词信息判定
+                _context4.next = 5;return _this4.doMsgSecCheck(_this4.cinput);case 5:cres = _context4.sent;if (!(
+                cres.data.Response.EvilTokens.length > 0)) {_context4.next = 9;break;}
+                uni.showModal({
+                  title: '敏感词审核',
+                  content: '您发布的评论涉及敏感词：' + cres.data.Response.EvilTokens[0].EvilKeywords });return _context4.abrupt("return");case 9:if (!(
+
+
+
+
+                _this4.type === 'feed')) {_context4.next = 16;break;}_context4.next = 12;return (
                   _this4.$u.api.commentOneFeed({
-                    id: _this4.oneInfoClone.id,
-                    body: _this4.cinput }));case 6:
-
-                ++_this4.oneInfoClone.feed_comment_count;
-                // 通知 个人中心当前动态评论增加
-                uni.$emit('myFeedCommentChange', _this4.oneInfoClone);_context4.next = 13;break;case 10:_context4.next = 12;return (
-
-                  _this4.$u.api.commentOneInfo({
                     id: _this4.oneInfoClone.id,
                     body: _this4.cinput }));case 12:
 
-                ++_this4.oneInfoClone.comment_count;case 13:
+                ++_this4.oneInfoClone.feed_comment_count;
+                // 通知 个人中心当前动态评论增加
+                uni.$emit('myFeedCommentChange', _this4.oneInfoClone);_context4.next = 19;break;case 16:_context4.next = 18;return (
+
+                  _this4.$u.api.commentOneInfo({
+                    id: _this4.oneInfoClone.id,
+                    body: _this4.cinput }));case 18:
+
+                ++_this4.oneInfoClone.comment_count;case 19:
 
                 uni.showToast({
                   title: "评论成功",
@@ -386,7 +406,7 @@ var _vuex = __webpack_require__(/*! vuex */ 41);function _interopRequireDefault(
 
                 _this4.cinput = '';
                 _this4.closeComment();
-                _this4.getCommentsList();case 17:case "end":return _context4.stop();}}}, _callee4);}))();
+                _this4.getCommentsList();case 23:case "end":return _context4.stop();}}}, _callee4);}))();
     } },
 
   // 过滤器

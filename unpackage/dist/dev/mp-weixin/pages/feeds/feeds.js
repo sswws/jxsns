@@ -175,7 +175,7 @@ var _default =
   methods: {
     // 获取请求数据
     getFeeds: function getFeeds() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res, feeds, showArrList, i, timer;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:if (!(
-                _this.canRequestFeeds == "yes")) {_context.next = 11;break;}
+                _this.canRequestFeeds == "yes")) {_context.next = 9;break;}
                 uni.showToast({
                   title: "请求中...",
                   icon: "loading",
@@ -184,9 +184,7 @@ var _default =
                 // 设置状态
                 _this.canRequestFeeds = "no";_context.next = 5;return (
                   _this.$u.api.getFeeds());case 5:res = _context.sent;
-                feeds = res.data.feeds;
-                feeds = [].concat(_toConsumableArray(feeds), _toConsumableArray(feeds), _toConsumableArray(feeds));
-                feeds = feeds.map(function (item) {
+                feeds = res.data.feeds.map(function (item) {
                   return {
                     id: item.id,
                     cover: _this.BaseFileURL + item.images[0].file };
@@ -204,7 +202,6 @@ var _default =
                       showArrList.push(_this.feedsList.slice(i, i + 6));
                     }
                   }
-                  console.log(showArrList);
                   _this.showFeedsList = showArrList;
                   timer = setTimeout(function () {
                     clearTimeout(timer);
@@ -218,7 +215,7 @@ var _default =
                     duration: 1000 });
 
                 }
-                uni.hideToast();case 11:
+                uni.hideToast();case 9:
 
                 // 如果请求状态到底了后，则提示到底了
                 if (_this.canRequestFeeds == "end") {
@@ -228,7 +225,7 @@ var _default =
                     icon: "success",
                     duration: 1000 });
 
-                }case 12:case "end":return _context.stop();}}}, _callee);}))();
+                }case 10:case "end":return _context.stop();}}}, _callee);}))();
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

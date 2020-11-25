@@ -177,6 +177,19 @@
 				this.swiperSliderHeight = height
 			})
 			
+			uni.$on('indexUserLogin', ()=>{
+				this.currentSwiperIndex = 0
+				this.feedsList = []
+				this.$refs.waterfall.clear()
+				this.getFeedsList()
+			})
+			uni.$on('indexUserLogout', ()=>{
+				this.currentSwiperIndex = 0
+				this.feedsList = []
+				this.$refs.waterfall.clear()
+				this.getFeedsList()
+			})
+			
 			// 发布新的动态后，触发数据更新
 			uni.$on("indexFeedsUpdate", ()=>{
 				this.currentSwiperIndex = 0

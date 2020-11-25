@@ -9,9 +9,7 @@
 				<view class="commenter">
 					<view class="info">
 						<view class="left">
-							<u-avatar size="50" class="avatar" :src="
-                  !!commentItem.user.avatar ? commentItem.user.avatar.url : ''
-                " />
+							<u-avatar size="50" class="avatar" :src="!!commentItem.user.avatar ? commentItem.user.avatar.url : '' " />
 							<view class="name">{{ commentItem.user.name }}</view>
 						</view>
 					</view>
@@ -195,11 +193,33 @@
 				  this.disableSendCommentTag = false
 			  }
 			},
+			// 在这里设计 敏感词 鉴定操作
+			doMsgSecCheck(text) {
+			    return wx.serviceMarket.invokeService({
+			      service: 'wxee446d7507c68b11',
+			      api: 'msgSecCheck',
+			      data: {
+			        "Action": "TextApproval",
+			        "Text": text
+			      },
+			    })
+			 },
 			// 发送评论信息
 			async sendComment(){
-				// 在这里设计 敏感词 鉴定操作
+				// 发送状态判定
 				if(this.disableSendCommentTag) return 
 				this.disableSendCommentTag = true
+				
+				// 敏感词信息判定
+				let cres = await this.doMsgSecCheck(this.cinput)
+				if(cres.data.Response.EvilTokens.length > 0){
+					uni.showModal({
+						title:'敏感词审核',
+						content: '您发布的评论涉及敏感词：'+ cres.data.Response.EvilTokens[0].EvilKeywords
+					})
+					return
+				}
+
 				if(this.type === 'feed'){
 					await this.$u.api.commentOneFeed({
 						id: this.oneInfoClone.id,

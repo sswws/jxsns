@@ -320,10 +320,10 @@ var _todoFeed = _interopRequireDefault(__webpack_require__(/*! @/mixins/todoFeed
   onLoad: function onLoad() {var _this = this;
     this.getInfos();
     // 用户登录后触发数据更新
-    uni.$on('userLogin', this.getInfos);
+    uni.$on('meUserLogin', this.getInfos);
 
     // 用户退出后触发数据更新
-    uni.$on('userLogout', function () {
+    uni.$on('meUserLogout', function () {
       console.log('触发了退出操作');
       _this.feedsList = [];
       _this.avatar = '';

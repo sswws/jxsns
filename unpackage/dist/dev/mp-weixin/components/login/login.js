@@ -577,7 +577,8 @@ var _vuex = __webpack_require__(/*! vuex */ 41);function _interopRequireDefault(
                   commented: res.data.user.commented };
 
                 _this5.userLoginAction(loginInfo);
-                uni.$emit('userLogin');case 10:case "end":return _context3.stop();}}}, _callee3);}))();
+                uni.$emit('meUserLogin');
+                uni.$emit('indexUserLogin');case 11:case "end":return _context3.stop();}}}, _callee3);}))();
     },
     // 更改 登陆 注册 方式选择
     sectionChange: function sectionChange(index) {
