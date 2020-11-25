@@ -1,7 +1,7 @@
 <template>
 	<view class="goto-share" v-if="loginState">
 		<!-- 个人分享 选择器 -->
-		<image class="share-img" src="../../static/carm.png" @tap.stop="showActionsheet()" mode="aspectFit"/>
+		<image class="share-img" src="@/static/carm.png" @tap.stop="gotoShare()" mode="aspectFit" />
 	</view>
 </template>
 
@@ -11,31 +11,17 @@
 	} from 'vuex'
 	export default {
 		data() {
-			return {
-				// 类型选择器相关参数配置
-				itemList: ["照片", "视频"]
-			};
+			return {};
 		},
-		computed:{
+		computed: {
 			...mapState(['loginState'])
 		},
 		methods: {
 			// 底部个人分享 弹窗相关操作
-			async showActionsheet() {
-				uni.showActionSheet({
-					itemList: this.itemList,
-					success: function(res) {
-						if (res.tapIndex == 0) {
-							uni.navigateTo({
-								url: "/subpages/share/share?type=imgs",
-							});
-						} else if (res.tapIndex == 1) {
-							uni.navigateTo({
-								url: "/subpages/share/share?type=video",
-							});
-						}
-					}
-				});
+			gotoShare() {
+				uni.navigateTo({
+					url: "/subpages/share/share",
+				})
 			}
 		}
 	};

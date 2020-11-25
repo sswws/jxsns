@@ -4,49 +4,31 @@
 		<view class="uni-textarea">
 			<textarea placeholder-style="color:#AAAAAA" placeholder="添加描述..." @input="bindTextAreaInput" />
 			</view>
-    <!-- 内容发布 -->
-    <view class="pics">
-      <!-- 图片选择及发布相关 -->
-      <template v-if="uploadType == 'imgs' ">
-        <view class="medias" v-for="( image, index ) in uploadPicsList" :key="index">
-          <image
-            class="img"
-            :src="image.path"
-            :data-src="image"
-            @tap="previewImage(index)"
-            mode="aspectFill"
-          />
-          <u-icon name="close" class="iclose" color="#eee" size="20" @tap="removeImage(index)" />
-        </view>
-        <!-- 选择照片按钮 -->
-        <view class="uploadBtn" @tap="chosePicsAndUpload" v-if="uploadPicsList.length < 9">
-          <u-icon name="plus" size="60" color="#aaa" />
-          <view class="text">选择照片</view>
-        </view>
-      </template>
+		
+		<!-- 内容发布 -->
+		<view class="pics">
+			<view class="medias" v-for="( image, index ) in uploadPicsList" :key="index">
+			  <image
+				class="img"
+				:src="image.path"
+				:data-src="image"
+				@tap="previewImage(index)"
+				mode="aspectFill"
+			  />
+			  <u-icon name="close" class="iclose" color="#eee" size="20" @tap="removeImage(index)" />
+			</view>
 
-      <!-- 视频选择及发布相关 -->
-      <template v-if="uploadType == 'video' ">
-        <view class="medias" v-if="!!uploadVideo.tempFilePath">
-          <video
-            class="video"
-            :src="uploadVideo.tempFilePath"
-            object-fit="cover"
-            :autoplay="false"
-            :controls="false"
-          />
-          <u-icon name="close" class="iclose" color="#eee" size="20" @tap="removeVideo()" />
-        </view>
-        <view class="uploadBtn" @tap="choseVideoAndUpload" v-if="!uploadVideo.tempFilePath ">
-          <u-icon name="plus" size="60" color="#aaa" />
-          <view class="text">选择视频</view>
-        </view>
-      </template>
-    </view>
+			<!-- 选择照片按钮 -->
+			<view class="uploadBtn" @tap="chosePicsAndUpload" v-if="uploadPicsList.length < 9">
+			  <u-icon name="plus" size="60" color="#aaa" />
+			  <view class="text">选择照片</view>
+			</view>
 
-    <view class="btns">
-      <u-button type="primary" size="default" @click="sendFeed" :disabled="uploadStatus">发布动态</u-button>
-    </view>
+		</view>
+
+		<view class="btns">
+		  <u-button type="primary" size="default" @click="sendFeed" :disabled="uploadStatus">发布动态</u-button>
+		</view>
 
   </view>
 </template>
@@ -57,39 +39,16 @@
 			return {
 			  // 发布内容描述
 			  feedInfo: "",
-			  // 上传类型
-			  uploadType: "imgs",
 			  // 预置图片上传列表
 			  uploadPicsList: [],
-			  // 预置视频上传列表
-			  uploadVideo: {},
 			  // 发布状态控制器
 			  uploadStatus: false,
 			}
-		},
-		onLoad(params){
-			this.uploadType = params.type
 		},
 		methods: {
 			// textarea 输入内容获取
 			bindTextAreaInput(e) {
 			  this.feedInfo = e.detail.value;
-			},
-			// 选择视频并上传
-			choseVideoAndUpload() {
-			  // 上传视频
-			  uni.chooseVideo({
-			    maxDuration: 60,
-			    count: 1,
-			    camera: "back",
-			    // 视频是否压缩
-			    compressed: true,
-			    // 视频来源类型
-			    sourceType: ["album", "camera"],
-			    success: (res) => {
-			      this.uploadVideo = res;
-			    },
-			  });
 			},
 			// 选择并上传图片
 			chosePicsAndUpload() {
@@ -133,25 +92,11 @@
 			removeImage(index) {
 			  this.uploadPicsList.splice(index, 1);
 			},
-			// 删除视频
-			removeVideo() {
-			  this.uploadVideo = {};
-			},
 			// 发布动态
 			async sendFeed() {
 			  // 如果正在上传中则等待
 			  if (this.uploadStatus) return
 			  this.uploadStatus = true
-			  
-			  if (this.uploadType == "video") {
-				uni.showToast({
-				  title: "暂不支持视频",
-				  icon: "loading",
-				  duration: 1000,
-				})
-				this.uploadStatus = false
-				return
-			  } 
 			  
 			  // 如果描述为空则不进行发布
 			  if (this.feedInfo == "") {
@@ -204,12 +149,11 @@
 			      icon: "success",
 			      duration: 1000,
 			      success: () => {
-			        // 通知个人中心 动态数量更新了
-			        // uni.$emit("userFeddsNumChange");
-			        // 通知动态瀑布流 更新了
-			        // uni.$emit("addOneFeed");
+			        // 通知个人中心 动态更新了
+			        uni.$emit("indexFeedsUpdate")
+			        // 通知首页 动态更新了
+			        uni.$emit("myFeedsUpdate");
 			        this.uploadStatus = false;
-			        // uni.$emit("activity:feed:posted");
 			        uni.navigateBack({
 			          delta: 1,
 			        });
@@ -217,20 +161,18 @@
 			    });
 			  } else {
 			    uni.hideToast();
-			    uni.showToast({
+			    uni.showModal({
 			      title: "动态发布失败",
-			      icon: "loading",
-			      duration: 1500,
+			      content: pres.data.message,
+				  complete: ()=>{
+					  uni.navigateBack({
+					    delta: 1,
+					  });
+				  }
 			    });
 			    this.uploadStatus = false;
 			  }
-			  
-			  
-			  
-			  
 			}
-			
-			
 		}
 	}
 </script>
@@ -317,4 +259,3 @@
 		left: 25upx;
 	}
 </style>
-

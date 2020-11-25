@@ -2,7 +2,6 @@
   "pages": [
     "pages/index/index",
     "pages/feeds/feeds",
-    "pages/store/store",
     "pages/me/me",
     "pages/webview/webview"
   ],
@@ -38,12 +37,6 @@
         "selectedIconPath": "/static/tabbar-icons/feeds_s.png",
         "text": "动态",
         "pagePath": "pages/feeds/feeds"
-      },
-      {
-        "iconPath": "/static/tabbar-icons/store.png",
-        "selectedIconPath": "/static/tabbar-icons/store_s.png",
-        "text": "商城",
-        "pagePath": "pages/store/store"
       },
       {
         "iconPath": "/static/tabbar-icons/me.png",

@@ -1,6 +1,6 @@
 <template>
 	<view id="index">
-		
+
 		<!-- 顶部导航 -->
 		<uni-nav-bar v-if="navBarShowTag">
 			<view class="tabs-box">
@@ -8,7 +8,7 @@
 				<view class="one-nav" :class="currentSwiperIndex === 1 ? 'nav-actived' : '' " @tap="swiperChange(1)">资讯</view>
 			</view>
 		</uni-nav-bar>
-		
+
 		<!-- 页面 header 相关部分 -->
 		<view class="header-box">
 			<!-- 顶部广告位轮播图 -->
@@ -29,24 +29,24 @@
 						<view class="title">精彩动态</view>
 					</view>
 				</view>
-				<view class="card-one card-right" @tap="gotoFeeds('/pages/store/store')">
+				<view class="card-one card-right" @tap="gotoFeeds('/pages/me/me')">
 					<image class="img" src="@/static/ran.png" mode="aspectFill" />
 					<view class="iright">
-						<view class="title">优选商城</view>
+						<view class="title">个人中心</view>
 					</view>
 				</view>
 			</view>
-			
+
 			<!-- Tab 选项卡 -->
 			<view class="tabs-box">
 				<view class="one-nav" :class="currentSwiperIndex === 0 ? 'nav-actived' : '' " @tap="swiperChange(0)">推荐</view>
 				<view class="one-nav" :class="currentSwiperIndex === 1 ? 'nav-actived' : '' " @tap="swiperChange(1)">资讯</view>
 			</view>
-			
+
 		</view>
-		
+
 		<!-- 内容轮播导航实现 -->
-		<swiper  class="swiper-box" :style=" 'height:'+ swiperSliderHeight " :current="currentSwiperIndex" @animationfinish="swiperSlider">
+		<swiper class="swiper-box" :style=" 'height:'+ swiperSliderHeight " :current="currentSwiperIndex" @animationfinish="swiperSlider">
 			<!-- 推荐动态实现 -->
 			<swiper-item class="swiper-item">
 				<view class="page-item sns-now">
@@ -119,15 +119,15 @@
 					</navigator>
 				</view>
 			</swiper-item>
-			
+
 		</swiper>
-		
+
 		<!-- 分享按钮组件 -->
 		<goto-share />
-		
+
 		<!-- 登陆组件 -->
-		<login ref="login"/>
-		
+		<login ref="login" />
+
 	</view>
 </template>
 
@@ -142,7 +142,7 @@
 	import WaterfallSns from '@/components/waterfall-sns/index.vue'
 	import feedMixin from '@/mixins/todoFeed.js'
 	export default {
-		mixins:[ feedMixin ],
+		mixins: [feedMixin],
 		data() {
 			return {
 				// navBar 显示状态控制
@@ -164,11 +164,11 @@
 				oldNewsScrollTop: 0
 			}
 		},
-		components:{
+		components: {
 			WaterfallSns
 		},
-		computed:{
-			...mapState(['loginState','userInfo'])
+		computed: {
+			...mapState(['loginState', 'userInfo'])
 		},
 		async onLoad() {
 			// 在这里注册一个 uniAPP 的顶层事件，用来作为数据通信
@@ -176,41 +176,60 @@
 				this.swiperSliderFeedsHeight = height
 				this.swiperSliderHeight = height
 			})
+			
+			// 发布新的动态后，触发数据更新
+			uni.$on("indexFeedsUpdate", ()=>{
+				this.currentSwiperIndex = 0
+				this.feedsList = []
+				this.$refs.waterfall.clear()
+				this.getFeedsList()
+			})
+			
+			// 个人中心删除一条动态后，触发更新首页数据
+			uni.$on("indexFeedRemove", fid =>{
+				this.$refs.waterfall.remove(fid);
+			})
+			
+			// 用户点赞一条动态后触发数据更新
+			uni.$on('indexFeedLoveChange', item => {
+				this.$refs.waterfall.modify(item.id, "like_count", item.like_count);
+				this.$refs.waterfall.modify(item.id, "has_like", item.has_like);
+			})
 
 			// 我们要在这里初始化请求相关数据
 			this.getAdverts()
 			this.getFeedsList()
 			this.getNewsList()
-			
+
 		},
-		onPageScroll(event){
-			if(this.currentSwiperIndex === 0){
+		onPageScroll(event) {
+			if (this.currentSwiperIndex === 0) {
 				this.oldFeedsScrollTop = event.scrollTop
-			}else{
+			} else {
 				this.oldNewsScrollTop = event.scrollTop
 			}
-			if(event.scrollTop > 220){
-				this.navBarShowTag = true 
-			}else{
+			if (event.scrollTop > 220) {
+				this.navBarShowTag = true
+			} else {
 				this.navBarShowTag = false
 			}
 		},
-		onReachBottom(){
+		onReachBottom() {
 			console.log('下拉到底啦')
 			// 请求新的数据
-			if(this.currentSwiperIndex === 0){
+			if (this.currentSwiperIndex === 0) {
 				this.getFeedsList()
-			}else{
+			} else {
 				this.getNewsList()
 			}
 		},
-		onPullDownRefresh(){
+		onPullDownRefresh() {
 			console.log('顶部下拉刷新')
 			this.feedsList = []
 			this.$refs.waterfall.clear()
-			if(this.currentSwiperIndex === 0){
+			if (this.currentSwiperIndex === 0) {
 				this.getFeedsList()
-			}else{
+			} else {
 				this.getNewsList()
 			}
 		},
@@ -224,9 +243,11 @@
 		},
 		methods: {
 			// 请求 广告轮播图信息
-			async getAdverts(){
-				let adverts = await this.$u.api.getAdvert({ space: '1,2,3' })
-				this.swiperAdList = adverts.data.map( item => {
+			async getAdverts() {
+				let adverts = await this.$u.api.getAdvert({
+					space: '1,2,3'
+				})
+				this.swiperAdList = adverts.data.map(item => {
 					return {
 						id: item.id,
 						link: item.data.link,
@@ -235,9 +256,9 @@
 				})
 			},
 			// 请求 feeds 列表数据
-			async getFeedsList(){
+			async getFeedsList() {
 				let feeds = await this.$u.api.getFeeds()
-				let feedList = feeds.data.feeds.map(item =>{
+				let feedList = feeds.data.feeds.map(item => {
 					return {
 						...item,
 						cover: this.BaseFileURL + item.images[0].file,
@@ -248,55 +269,55 @@
 				this.feedsList = [...this.feedsList, ...feedList]
 			},
 			// 请求资讯列表数据
-			async getNewsList(){
+			async getNewsList() {
 				let news = await this.$u.api.getNews()
-				let newsList= news.data.map(item => {
+				let newsList = news.data.map(item => {
 					return {
 						...item,
 						cover: this.BaseFileURL + item.image.id
 					}
 				})
-				
-				this.newsList = [...this.newsList , ...newsList]
+
+				this.newsList = [...this.newsList, ...newsList]
 				console.log(this.newsList)
 				this.swiperSliderNewsHeight = this.newsList.length * 95 + 100 + 'px'
 				this.swiperSliderHeight = this.swiperSliderNewsHeight
 			},
 			// 页面滑动左右分页的时候实现的效果
-			swiperSlider(event){
-				if(event.detail.current === 0){
+			swiperSlider(event) {
+				if (event.detail.current === 0) {
 					this.swiperSliderHeight = this.swiperSliderFeedsHeight
 					uni.pageScrollTo({
-						duration:0,//过渡时间必须为0，uniapp bug，否则运行到手机会报错
-						scrollTop: this.oldFeedsScrollTop,//滚动到目标位置
+						duration: 0, //过渡时间必须为0，uniapp bug，否则运行到手机会报错
+						scrollTop: this.oldFeedsScrollTop, //滚动到目标位置
 					})
-				}else{
+				} else {
 					this.swiperSliderHeight = this.swiperSliderNewsHeight
 					uni.pageScrollTo({
-						duration:0,//过渡时间必须为0，uniapp bug，否则运行到手机会报错
-						scrollTop: this.oldNewsScrollTop,//滚动到目标位置
+						duration: 0, //过渡时间必须为0，uniapp bug，否则运行到手机会报错
+						scrollTop: this.oldNewsScrollTop, //滚动到目标位置
 					})
 				}
 				this.currentSwiperIndex = event.detail.current
 			},
 			// 点击按钮实现切换效果
-			swiperChange(index){
-				if(index === 0){
+			swiperChange(index) {
+				if (index === 0) {
 					this.swiperSliderHeight = this.swiperSliderFeedsHeight
 					uni.pageScrollTo({
-						duration:0,//过渡时间必须为0，uniapp bug，否则运行到手机会报错
-						scrollTop: this.oldFeedsScrollTop,//滚动到目标位置
+						duration: 0, //过渡时间必须为0，uniapp bug，否则运行到手机会报错
+						scrollTop: this.oldFeedsScrollTop, //滚动到目标位置
 					})
-				}else{
+				} else {
 					this.swiperSliderHeight = this.swiperSliderNewsHeight
 					uni.pageScrollTo({
-						duration:0,//过渡时间必须为0，uniapp bug，否则运行到手机会报错
-						scrollTop: this.oldNewsScrollTop,//滚动到目标位置
+						duration: 0, //过渡时间必须为0，uniapp bug，否则运行到手机会报错
+						scrollTop: this.oldNewsScrollTop, //滚动到目标位置
 					})
 				}
 				this.currentSwiperIndex = index
 			},
-			gotoFeeds(url){
+			gotoFeeds(url) {
 				uni.switchTab({
 					url
 				})
@@ -309,6 +330,7 @@
 	#sns {
 		background-color: #f1f1f1;
 	}
+
 	// 推荐、咨询 按钮样式
 	.tabs-box {
 		display: flex;
@@ -328,14 +350,14 @@
 			}
 		}
 	}
-	
+
 	.header-box {
 		position: relative;
 		left: 0;
 		height: 500upx;
 		background-color: #f1f1f1;
 		z-index: 1;
-	
+
 		// 广告位轮播器相关样式
 		.swiper {
 			width: 750upx;
@@ -345,13 +367,14 @@
 			top: 0;
 			text-align: center;
 			z-index: 1;
+
 			.banner-swiper-img {
 				width: 750upx;
 				height: 400upx;
 				box-shadow: 0 0 2px 0 rgb(188, 188, 188);
 			}
 		}
-	
+
 		.crile {
 			width: 750upx;
 			height: 50upx;
@@ -360,7 +383,7 @@
 			top: 355upx;
 			z-index: 9;
 		}
-	
+
 		// 新鲜事 活动墙 按钮样式
 		.card-header {
 			position: absolute;
@@ -376,7 +399,7 @@
 			justify-content: space-between;
 			align-items: center;
 			align-content: center;
-	
+
 			.card-one {
 				width: 328upx;
 				height: 96upx;
@@ -390,20 +413,23 @@
 				justify-content: flex-start;
 				align-items: center;
 				align-content: center;
+
 				.img {
 					width: 44upx;
 					height: 44upx;
 					margin-left: 50upx;
 				}
+
 				.iright {
 					margin-left: 30upx;
 					text-align: left;
 					color: #888;
+
 					.title {
 						font-size: 30upx;
 						color: #001432;
 					}
-	
+
 					.iview {
 						display: flex;
 						flex-direction: row;
@@ -417,6 +443,7 @@
 				}
 			}
 		}
+
 		// 推荐、咨询 按钮样式
 		.tabs-box {
 			width: 750upx;
@@ -427,7 +454,7 @@
 			display: flex;
 			flex-direction: row;
 			justify-content: center;
-			
+
 			.one-nav {
 				height: 80upx;
 				width: 110upx;
@@ -435,38 +462,41 @@
 				font-size: 36upx;
 				text-align: center;
 				font-weight: blod;
+
 				&.nav-actived {
 					color: #0050FF;
 				}
 			}
 		}
 	}
-	
+
 	// 此刻 栏目样式\
-	.swiper-box{
+	.swiper-box {
 		background-color: #f1f1f1;
 		padding: 60upx 0 40upx;
 	}
+
 	.sns-now {
+
 		// 动态相关瀑布流样式
 		.feeds-box {
 			width: 735upx;
 			margin-left: 13upx;
 			padding-bottom: 20upx;
-			
+
 			.feed-one {
 				width: 358upx;
 				margin-bottom: 12upx;
 				background-color: #FFF;
 				border-radius: 20upx;
-			
+
 				position: relative;
-			
+
 				.feed-img {
 					width: 358upx;
 					border-radius: 10upx;
 				}
-			
+
 				.feed-title {
 					width: 350upx;
 					margin-top: 15upx;
@@ -476,7 +506,7 @@
 					color: #001432;
 					text-align: left;
 				}
-			
+
 				.feed-info {
 					display: flex;
 					flex-direction: row;
@@ -488,7 +518,7 @@
 					font-size: 20upx;
 					color: #666;
 					padding: 0 10upx 16upx;
-			
+
 					.iview {
 						display: flex;
 						flex-direction: row;
@@ -496,6 +526,7 @@
 						justify-content: space-between;
 						align-items: center;
 						align-content: center;
+
 						.ilike {
 							display: flex;
 							flex-direction: row;
@@ -508,7 +539,7 @@
 							background-color: #FFFFFF;
 						}
 					}
-			
+
 					.avatar {
 						margin-right: 10upx;
 						height: 40upx;
@@ -516,17 +547,17 @@
 						border-radius: 50%;
 						border: 1upx solid #eee;
 					}
-			
+
 					.name {
 						max-width: 120upx;
 						color: #757474;
 					}
-			
+
 					.micon {
 						width: 32upx;
 						height: 28upx;
 					}
-			
+
 					.love-count {
 						padding-left: 10upx;
 						color: #757474;
@@ -535,11 +566,12 @@
 			}
 		}
 	}
-	
+
 	// 轮播页面 资讯
 	.sns-news {
 		background-color: #fff;
 		width: 750upx;
+
 		.one-new {
 			width: 700upx;
 			height: 74px;
@@ -554,6 +586,7 @@
 			padding-left: 25upx;
 			padding-right: 25upx;
 			border-bottom: 1px solid #f1f1f1;
+
 			.left {
 				width: 490upx;
 				height: 140upx;
@@ -562,12 +595,14 @@
 				flex-direction: column;
 				justify-content: space-between;
 				align-items: flex-start;
+
 				.title {
 					font-size: 30upx;
 					line-height: 48upx;
 					color: #001432;
 					margin-top: 20upx;
 				}
+
 				.uinfo {
 					width: 490upx;
 					display: flex;
@@ -590,8 +625,10 @@
 					}
 				}
 			}
+
 			.right {
 				width: 120upx;
+
 				.pic {
 					width: 120upx;
 					height: 120upx;
@@ -601,5 +638,4 @@
 			}
 		}
 	}
-	
 </style>

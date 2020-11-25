@@ -6,10 +6,10 @@
 	export default {
 		data() {
 			return {
-				url:''
+				url: ''
 			}
 		},
-		onLoad(options){
+		onLoad(options) {
 			this.url = decodeURI(options.url)
 		}
 	}

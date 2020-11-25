@@ -22,7 +22,7 @@
 			<view class="mtitle">{{newInfo.title}}</view>
 			<view class="info-user">
 				<view class="info">
-					<text>{{ newInfo.author }} {{ newInfo.created_at | timeFormate }} 发布</text>
+					<text>{{ newInfo.author }} {{ newInfo.created_at | timeFormate }} 发布 {{ newInfo.views_count }}阅读</text>
 				</view>
 			</view>
 		</view>
@@ -30,9 +30,9 @@
 
 		<!-- 资讯详情 -->
 		<view class="info-content">
-			<html-parse  :content="newInfo.content" />
+			<html-parse :content="newInfo.content" />
 		</view>
-		
+
 		<!-- 作者信息 -->
 		<view class="info-header">
 			<text class="send">{{ newInfo.created_at | timeFormate }}发布 </text>
@@ -40,7 +40,7 @@
 		</view>
 
 		<view class="line" />
-		<comment :oneInfo="newInfo" type="info"/>
+		<comment :oneInfo="newInfo" type="info" />
 	</view>
 </template>
 
@@ -53,7 +53,7 @@
 	import picBlur from "@/components/pic-blur/pic-blur.vue";
 	// 引入 评论插件
 	import comment from '@/components/comment/comment.vue'
-	
+
 	export default {
 		components: {
 			htmlParse,
@@ -80,26 +80,21 @@
 		async onLoad(options) {
 			// 分享
 			wx.showShareMenu({
-			  withShareTicket: true,
-			  menus: ['shareAppMessage', 'shareTimeline']
+				withShareTicket: true,
+				menus: ['shareAppMessage', 'shareTimeline']
 			})
 			let res = await this.$u.api.getNewInfo(options);
 			res = res.data
 			
 			// let cp = res.content.replace(/@!\[(\d*).jpg\]\((\d*)\)/g,"<img src='" +this.BaseFileURL +'$2' + "' />")
-			let cp = res.content.replace(/@!\[.*\]\((\d*)\)/g,"<img src='" +this.BaseFileURL +'$1' + "' />")
-			
-			console.log(cp)
+			let cp = res.content.replace(/@!\[.*\]\((\d*)\)/g, "<img src='" + this.BaseFileURL + '$1' + "' />")
 			
 			this.newInfo = {
-				id: res.id,
-				cutTitle : res.title.length > 11 ? res.title.substring(0, 11) + "..." : res.title,
-				title: res.title,
+				...res,
+				cutTitle: res.title.length > 11 ? res.title.substring(0, 11) + "..." : res.title,
 				cover: this.BaseFileURL + res.image.id,
 				userId: res.user_id,
-				author: res.author,
 				content: cp,
-				created_at: res.created_at,
 				views_count: res.hits
 			}
 			this.getRequestOK = true;
@@ -122,84 +117,87 @@
 	};
 </script>
 <style lang="scss" scoped>
-/* 引入富文本解析器 */
-@import '@/components/html-parse/parse.css';
-.hicon{
-	height: 36upx;
-	width: 36upx;
-	padding-left: 30upx;
-	padding-top: 10upx;
-}
+	/* 引入富文本解析器 */
+	@import '@/components/html-parse/parse.css';
 
-.model {
-    width: 750upx;
-    height: 520upx;
-    position: absolute;
-    background-color: rgba($color: #364161, $alpha: 0.2);
-    z-index: 1;
-    top: 0;
-    left: 0;
-	display: flex;
-	flex-direction: column;
-	flex-wrap: nowrap;
-	justify-content: flex-end;
-	
-	.mtitle{
-		margin-top: 20upx;
-		width: 700upx;
+	.hicon {
+		height: 36upx;
+		width: 36upx;
+		padding-left: 30upx;
+		padding-top: 10upx;
+	}
+
+	.model {
+		width: 750upx;
+		height: 520upx;
+		position: absolute;
+		background-color: rgba($color: #364161, $alpha: 0.2);
+		z-index: 1;
+		top: 0;
+		left: 0;
+		display: flex;
+		flex-direction: column;
+		flex-wrap: nowrap;
+		justify-content: flex-end;
+
+		.mtitle {
+			margin-top: 20upx;
+			width: 700upx;
+			margin-left: 25upx;
+			font-size: 44upx;
+			color: #fff;
+			line-height: 64upx;
+		}
+
+
+		.info-user {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			justify-content: flex-start;
+			align-items: center;
+			align-content: center;
+			margin-top: 30upx;
+			margin-left: 5upx;
+			margin-bottom: 30upx;
+
+			.info {
+				display: flex;
+				flex-direction: column;
+				flex-wrap: wrap;
+				justify-content: flex-end;
+				align-items: left;
+				margin-left: 20upx;
+				font-size: 24upx;
+				font-weight: bolder;
+				color: #fff;
+			}
+		}
+	}
+
+
+	.info-content {
+		width: 680upx;
+		text-align: left;
+		margin-top: 40upx;
+		margin-left: 35upx;
+	}
+
+	.info-header {
+		margin-top: 10upx;
 		margin-left: 25upx;
-		font-size: 44upx;
-		color: #fff;
-		line-height: 64upx;
+		padding-bottom: 20upx;
+		color: #999;
+		font-size: 22upx;
+
+		.send {
+			margin-right: 20upx;
+		}
 	}
-	
-	
-	.info-user {
-	  display: flex;
-	  flex-direction: row;
-	  flex-wrap: wrap;
-	  justify-content: flex-start;
-	  align-items: center;
-	  align-content: center;
-	  margin-top: 30upx;
-	  margin-left: 5upx;
-	  margin-bottom: 30upx;
-	  .info {
-	    display: flex;
-	    flex-direction: column;
-	    flex-wrap: wrap;
-	    justify-content: flex-end;
-	    align-items: left;
-	    margin-left: 20upx;
-	    font-size: 24upx;
-		font-weight: bolder;
-		color: #fff;
-	  }
+
+	.line {
+		height: 30upx;
+		width: 750upx;
+		background-color: #f3f3f3;
 	}
-}
-
-
-.info-content {
-  width: 680upx;
-  text-align: left;
-  margin-top: 40upx;
-  margin-left: 35upx;
-}
-
-.info-header{
-	margin-top: 10upx;
-	margin-left: 25upx;
-	padding-bottom: 20upx;
-	color: #999;
-	font-size: 22upx;
-	.send{
-		margin-right: 20upx;
-	}
-}
-
-.line{
-	height: 30upx;
-	width: 750upx;
-	background-color: #f3f3f3;
-}
 </style>

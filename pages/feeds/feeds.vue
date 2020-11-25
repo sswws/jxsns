@@ -1,13 +1,14 @@
 <template>
 	<view class="rfeeds">
 		<view class="one-feeds-box" v-for=" (feedsList, i) in showFeedsList " :key="i">
-			<view v-for=" (item, k) in feedsList " :key="item.id" class="one-feed" 
-				:class="k % 6 == 0 ? ( i%2==0 ? 'feed-big-left' :'feed-big-right' ) : '' ">
+			<view v-for=" (item, k) in feedsList " :key="item.id" class="one-feed" :class="k % 6 == 0 ? ( i%2==0 ? 'feed-big-left' :'feed-big-right' ) : '' ">
 				<navigator :url=" '/subpages/feedinfo/feedinfo?id=' + item.id">
 					<image :src="item.cover" class="feed-content" mode="aspectFill" :lazy-load="true" />
 				</navigator>
 			</view>
 		</view>
+		<!-- 分享按钮组件 -->
+		<goto-share />
 	</view>
 </template>
 <script>
@@ -51,7 +52,7 @@
 					// 设置状态
 					this.canRequestFeeds = "no"
 					let res = await this.$u.api.getFeeds()
-					let feeds  = res.data.feeds
+					let feeds = res.data.feeds
 					feeds = [...feeds, ...feeds, ...feeds]
 					feeds = feeds.map(item => {
 						return {
@@ -171,4 +172,3 @@
 		}
 	}
 </style>
-

@@ -96,7 +96,7 @@ var components
 try {
   components = {
     login: function() {
-      return __webpack_require__.e(/*! import() | components/login/login */ "components/login/login").then(__webpack_require__.bind(null, /*! @/components/login/login.vue */ 126))
+      return __webpack_require__.e(/*! import() | components/login/login */ "components/login/login").then(__webpack_require__.bind(null, /*! @/components/login/login.vue */ 120))
     }
   }
 } catch (e) {
@@ -314,7 +314,7 @@ var _vuex = __webpack_require__(/*! vuex */ 41);
 var _timeFrom = _interopRequireDefault(__webpack_require__(/*! @/tools/timeFrom.js */ 50));
 
 
-var _todoFeed = _interopRequireDefault(__webpack_require__(/*! @/mixins/todoFeed.js */ 52));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _iterableToArray(iter) {if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) return _arrayLikeToArray(arr);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var WaterfallSns = function WaterfallSns() {__webpack_require__.e(/*! require.ensure | components/waterfall-sns/index */ "components/waterfall-sns/index").then((function () {return resolve(__webpack_require__(/*! @/components/waterfall-sns/index.vue */ 140));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+var _todoFeed = _interopRequireDefault(__webpack_require__(/*! @/mixins/todoFeed.js */ 52));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _iterableToArray(iter) {if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) return _arrayLikeToArray(arr);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var WaterfallSns = function WaterfallSns() {__webpack_require__.e(/*! require.ensure | components/waterfall-sns/index */ "components/waterfall-sns/index").then((function () {return resolve(__webpack_require__(/*! @/components/waterfall-sns/index.vue */ 134));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 {
   mixins: [_todoFeed.default],
   data: function data() {
@@ -351,10 +351,29 @@ var _todoFeed = _interopRequireDefault(__webpack_require__(/*! @/mixins/todoFeed
                 _this.swiperSliderHeight = height;
               });
 
+              // 发布新的动态后，触发数据更新
+              uni.$on("indexFeedsUpdate", function () {
+                _this.currentSwiperIndex = 0;
+                _this.feedsList = [];
+                _this.$refs.waterfall.clear();
+                _this.getFeedsList();
+              });
+
+              // 个人中心删除一条动态后，触发更新首页数据
+              uni.$on("indexFeedRemove", function (fid) {
+                _this.$refs.waterfall.remove(fid);
+              });
+
+              // 用户点赞一条动态后触发数据更新
+              uni.$on('indexFeedLoveChange', function (item) {
+                _this.$refs.waterfall.modify(item.id, "like_count", item.like_count);
+                _this.$refs.waterfall.modify(item.id, "has_like", item.has_like);
+              });
+
               // 我们要在这里初始化请求相关数据
               _this.getAdverts();
               _this.getFeedsList();
-              _this.getNewsList();case 4:case "end":return _context.stop();}}}, _callee);}))();
+              _this.getNewsList();case 7:case "end":return _context.stop();}}}, _callee);}))();
 
   },
   onPageScroll: function onPageScroll(event) {
@@ -399,7 +418,9 @@ var _todoFeed = _interopRequireDefault(__webpack_require__(/*! @/mixins/todoFeed
   methods: {
     // 请求 广告轮播图信息
     getAdverts: function getAdverts() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var adverts;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.next = 2;return (
-                  _this2.$u.api.getAdvert({ space: '1,2,3' }));case 2:adverts = _context2.sent;
+                  _this2.$u.api.getAdvert({
+                    space: '1,2,3' }));case 2:adverts = _context2.sent;
+
                 _this2.swiperAdList = adverts.data.map(function (item) {
                   return {
                     id: item.id,

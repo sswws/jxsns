@@ -30,8 +30,8 @@ function timeFrom(timestamp = null, format = 'yyyy-mm-dd') {
 			break;
 		default:
 			// 如果format为false，则无论什么时间戳，都显示xx之前
-			if(format === false) {
-				if(timer >= 2592000 && timer < 365 * 86400) {
+			if (format === false) {
+				if (timer >= 2592000 && timer < 365 * 86400) {
 					tips = parseInt(timer / (86400 * 30)) + '个月前';
 				} else {
 					tips = parseInt(timer / (86400 * 365)) + '年前';

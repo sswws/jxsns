@@ -1,11 +1,11 @@
 let feedMixin = {
-	methods:{
+	methods: {
 		// 点赞或者取消点赞一条动态
-		async clickLove(item){
-			// 判断当前登录状态，如果处于登陆状态，则定时轮询请求消息数据
-			if(!this.loginState){
+		async clickLove(item) {
+			// 判断当前登录状态
+			if (!this.loginState) {
 				this.$refs.login.openLogin()
-				return 
+				return
 			}
 			// 动态点赞
 			if (item.has_like) {
@@ -31,8 +31,8 @@ let feedMixin = {
 					duration: 1000,
 				});
 			}
-			this.$refs.waterfall.modify(item.id, "like_count", item.like_count);
-			this.$refs.waterfall.modify(item.id, "has_like", item.has_like);
+			uni.$emit('indexFeedLoveChange',item)
+			uni.$emit('myFeedLoveChange',item)
 		}
 	}
 }

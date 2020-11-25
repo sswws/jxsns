@@ -48,9 +48,9 @@ var _httpInterceptor = _interopRequireDefault(__webpack_require__(/*! @/common/h
 
 var _httpApi = _interopRequireDefault(__webpack_require__(/*! @/common/http.api.js */ 43));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}_vue.default.config.productionTip = false; // main.js
 _vue.default.use(_uviewUi.default); // 引入公用的组件 uni-nav-bar
-var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/index */ "components/uni-nav-bar/index").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/index.vue */ 119));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};_vue.default.component("uni-nav-bar", uniNavBar); // 引入公用组件 登陆模块
-var login = function login() {__webpack_require__.e(/*! require.ensure | components/login/login */ "components/login/login").then((function () {return resolve(__webpack_require__(/*! @/components/login/login.vue */ 126));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};_vue.default.component("login", login); // 引入公用组件 分享组件
-var gotoShare = function gotoShare() {__webpack_require__.e(/*! require.ensure | components/gotoShare/gotoShare */ "components/gotoShare/gotoShare").then((function () {return resolve(__webpack_require__(/*! @/components/gotoShare/gotoShare.vue */ 133));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};_vue.default.component("goto-share", gotoShare);_vue.default.prototype.BaseFileURL = 'http://47.115.83.135/api/v2/files/'; // 引入 store 
+var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/index */ "components/uni-nav-bar/index").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/index.vue */ 113));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};_vue.default.component("uni-nav-bar", uniNavBar); // 引入公用组件 登陆模块
+var login = function login() {__webpack_require__.e(/*! require.ensure | components/login/login */ "components/login/login").then((function () {return resolve(__webpack_require__(/*! @/components/login/login.vue */ 120));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};_vue.default.component("login", login); // 引入公用组件 分享组件
+var gotoShare = function gotoShare() {__webpack_require__.e(/*! require.ensure | components/gotoShare/gotoShare */ "components/gotoShare/gotoShare").then((function () {return resolve(__webpack_require__(/*! @/components/gotoShare/gotoShare.vue */ 127));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};_vue.default.component("goto-share", gotoShare);_vue.default.prototype.BaseFileURL = 'http://47.115.83.135/api/v2/files/'; // 引入 store 
 _vue.default.prototype.$store = _index.default;_App.default.mpType = 'app';var app = new _vue.default(_objectSpread(_objectSpread({}, _App.default), {}, { store: _index.default })); // http拦截器，此为需要加入的内容，如果不是写在common目录，请自行修改引入路径
 // 这里需要写在最后，是为了等Vue创建对象完成，引入"app"对象(也即页面的"this"实例)
 _vue.default.use(_httpInterceptor.default, app); // http接口API集中管理引入部分
@@ -125,16 +125,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
-{
-  onLaunch: function onLaunch() {
-    console.log('App Launch');
-  },
-  onShow: function onShow() {
-    console.log('App Show');
-  },
-  onHide: function onHide() {
-    console.log('App Hide');
-  } };exports.default = _default;
+{};exports.default = _default;
 
 /***/ }),
 /* 8 */

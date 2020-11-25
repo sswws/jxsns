@@ -14,21 +14,24 @@
   "appid": "wx4b6d52f0832bd1f1",
   "projectname": "study",
   "condition": {
-    "search": {
-      "current": -1,
-      "list": []
-    },
-    "conversation": {
-      "current": -1,
+    "plugin": {
       "list": []
     },
     "game": {
-      "current": -1,
+      "list": []
+    },
+    "gamePlugin": {
       "list": []
     },
     "miniprogram": {
-      "current": -1,
-      "list": []
+      "list": [
+        {
+          "name": "subpages/feedinfo/feedinfo",
+          "pathName": "subpages/feedinfo/feedinfo",
+          "query": "id=30",
+          "scene": null
+        }
+      ]
     }
   }
 }

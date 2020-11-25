@@ -1,24 +1,25 @@
 // padStart 的 polyfill，因为某些机型或情况，还无法支持es7的padStart，比如电脑版的微信小程序
 // 所以这里做一个兼容polyfill的兼容处理
-if (!String.prototype.padStart){
+if (!String.prototype.padStart) {
 	String.prototype.padStart =
-	// 为了方便表示这里 fillString 用了ES6 的默认参数，不影响理解
-	function(maxLength, fillString = ' ') {
-		if (Object.prototype.toString.call(fillString) !== "[object String]") throw new TypeError('fillString must be String')
-		let str = this
-		// 返回 String(str) 这里是为了使返回的值是字符串字面量，在控制台中更符合直觉
-		if (str.length >= maxLength) return String(str)
+		// 为了方便表示这里 fillString 用了ES6 的默认参数，不影响理解
+		function(maxLength, fillString = ' ') {
+			if (Object.prototype.toString.call(fillString) !== "[object String]") throw new TypeError(
+				'fillString must be String')
+			let str = this
+			// 返回 String(str) 这里是为了使返回的值是字符串字面量，在控制台中更符合直觉
+			if (str.length >= maxLength) return String(str)
 
-		let fillLength = maxLength - str.length,
-			times = Math.ceil(fillLength / fillString.length)
-		while (times >>= 1) {
-			fillString += fillString
-			if (times === 1) {
+			let fillLength = maxLength - str.length,
+				times = Math.ceil(fillLength / fillString.length)
+			while (times >>= 1) {
 				fillString += fillString
+				if (times === 1) {
+					fillString += fillString
+				}
 			}
+			return fillString.slice(0, fillLength) + str;
 		}
-		return fillString.slice(0, fillLength) + str;
-	}
 }
 
 function timeFormat(timestamp = null, fmt = 'yyyy-mm-dd') {
