@@ -210,6 +210,7 @@
 				if(this.disableSendCommentTag) return 
 				this.disableSendCommentTag = true
 				
+				// #ifdef MP-WEIXIN
 				// 敏感词信息判定
 				let cres = await this.doMsgSecCheck(this.cinput)
 				if(cres.data.Response.EvilTokens.length > 0){
@@ -219,6 +220,7 @@
 					})
 					return
 				}
+				// #endif
 
 				if(this.type === 'feed'){
 					await this.$u.api.commentOneFeed({

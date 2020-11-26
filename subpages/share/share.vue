@@ -67,7 +67,6 @@
 			    sizeType: ["compressed"], //可以指定是原图还是压缩图，默认二者都有
 			    sourceType: ["album", "camera"], //从相册选择
 			    success: (res) => {
-			      console.log(res.tempFiles);
 			      this.uploadPicsList = [...this.uploadPicsList, ...res.tempFiles];
 			      if (this.uploadPicsList.length > 9) {
 			        this.uploadPicsList = this.uploadPicsList.slice(0, 9);
@@ -127,9 +126,10 @@
 			  
 			  let upStatusArr = [];
 			  // 循环遍历上传多图
-			  this.uploadPicsList.map((item) => {
-			    upStatusArr.push(uploadFile(item.path, item.size));
+			  this.uploadPicsList.map( file => { 
+				upStatusArr.push(uploadFile(file));
 			  });
+			  
 			  let images = [];
 			  (await Promise.all(upStatusArr)).map((item) => {
 			    images.push({id : item.id});

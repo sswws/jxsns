@@ -78,16 +78,20 @@
 			}
 		},
 		async onLoad(options) {
-			// 分享
+			// #ifdef MP-WEIXIN
+			// 微信条件下分享到朋友圈、群组
 			wx.showShareMenu({
 				withShareTicket: true,
 				menus: ['shareAppMessage', 'shareTimeline']
 			})
+			// #endif
 			let res = await this.$u.api.getNewInfo(options);
 			res = res.data
 			
 			// let cp = res.content.replace(/@!\[(\d*).jpg\]\((\d*)\)/g,"<img src='" +this.BaseFileURL +'$2' + "' />")
 			let cp = res.content.replace(/@!\[.*\]\((\d*)\)/g, "<img src='" + this.BaseFileURL + '$1' + "' />")
+			// 匹配检索换行符号，实现换行目标
+			cp = cp.replace(/\s\D\s/g, "<p></p>")
 			
 			this.newInfo = {
 				...res,
@@ -180,7 +184,12 @@
 		width: 680upx;
 		text-align: left;
 		margin-top: 40upx;
+		// #ifdef MP-WEIXIN
 		margin-left: 35upx;
+		// #endif
+		// #ifndef MP-WEIXIN
+		margin-left: 0;
+		// #endif
 	}
 
 	.info-header {

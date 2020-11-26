@@ -7,7 +7,7 @@
 	color: #333;
 	line-height: 1.5;
 	font-size: 1em;
-	text-align:justify;
+	text-align:left;
 }
 .wxParse view,.wxParse uni-view{
 	word-break: break-word;
@@ -17,7 +17,7 @@
 	font-size: 34rpx;
 	line-height: 56rpx;
 	clear: both;
-	letter-spacing: 1rpx;
+	letter-spacing: 0;
 	color: #465564;
 	margin-bottom: 20rpx;
 }

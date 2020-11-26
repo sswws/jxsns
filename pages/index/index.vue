@@ -171,11 +171,6 @@
 			...mapState(['loginState', 'userInfo'])
 		},
 		async onLoad() {
-			// 在这里注册一个 uniAPP 的顶层事件，用来作为数据通信
-			uni.$on("swiperHeightChange", height => {
-				this.swiperSliderFeedsHeight = height
-				this.swiperSliderHeight = height
-			})
 			
 			uni.$on('indexUserLogin', ()=>{
 				this.currentSwiperIndex = 0
@@ -280,6 +275,12 @@
 					}
 				})
 				this.feedsList = [...this.feedsList, ...feedList]
+				// 在这里注册一个 uniAPP 的顶层事件，用来作为数据通信
+				uni.$once("swiperHeightChange", height => {
+					console.log('计算出来的高度为:'+ height)
+					this.swiperSliderFeedsHeight = height
+					this.swiperSliderHeight = height
+				})
 			},
 			// 请求资讯列表数据
 			async getNewsList() {

@@ -1,7 +1,7 @@
 <template>
 	<view class="me">
 
-		<uni-nav-bar shadow="true" backState="2000" fontColor="#FFF" type="transparent">
+		<uni-nav-bar :shadow="true" backState="2000" fontColor="#FFF" type="transparent">
 			<view class="icon-setup" slot="left">
 				<image class="setting" src="@/static/setup.png" mode="aspectFit" @tap="gotoLink('/subpages/setting/setting')" />
 			</view>

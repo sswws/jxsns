@@ -374,12 +374,14 @@ var _vuex = __webpack_require__(/*! vuex */ 41);function _interopRequireDefault(
                 _this4.disableSendCommentTag) {_context4.next = 2;break;}return _context4.abrupt("return");case 2:
                 _this4.disableSendCommentTag = true;
 
+
                 // 敏感词信息判定
                 _context4.next = 5;return _this4.doMsgSecCheck(_this4.cinput);case 5:cres = _context4.sent;if (!(
                 cres.data.Response.EvilTokens.length > 0)) {_context4.next = 9;break;}
                 uni.showModal({
                   title: '敏感词审核',
                   content: '您发布的评论涉及敏感词：' + cres.data.Response.EvilTokens[0].EvilKeywords });return _context4.abrupt("return");case 9:if (!(
+
 
 
 

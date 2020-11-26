@@ -260,16 +260,20 @@ var _timeFrom = _interopRequireDefault(__webpack_require__(/*! @/tools/timeFrom.
     }
   },
   onLoad: function onLoad(options) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res, cp;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
-              // 分享
+
+              // 微信条件下分享到朋友圈、群组
               wx.showShareMenu({
                 withShareTicket: true,
                 menus: ['shareAppMessage', 'shareTimeline'] });_context.next = 3;return (
+
 
                 _this.$u.api.getNewInfo(options));case 3:res = _context.sent;
               res = res.data;
 
               // let cp = res.content.replace(/@!\[(\d*).jpg\]\((\d*)\)/g,"<img src='" +this.BaseFileURL +'$2' + "' />")
               cp = res.content.replace(/@!\[.*\]\((\d*)\)/g, "<img src='" + _this.BaseFileURL + '$1' + "' />");
+              // 匹配检索换行符号，实现换行目标
+              cp = cp.replace(/\s\D\s/g, "<p></p>");
 
               _this.newInfo = _objectSpread(_objectSpread({},
               res), {}, {
@@ -279,7 +283,7 @@ var _timeFrom = _interopRequireDefault(__webpack_require__(/*! @/tools/timeFrom.
                 content: cp,
                 views_count: res.hits });
 
-              _this.getRequestOK = true;case 8:case "end":return _context.stop();}}}, _callee);}))();
+              _this.getRequestOK = true;case 9:case "end":return _context.stop();}}}, _callee);}))();
   },
   filters: {
     timeFormate: function timeFormate(timeDate) {

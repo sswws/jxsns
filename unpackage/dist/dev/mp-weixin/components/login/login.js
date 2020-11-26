@@ -424,6 +424,11 @@ var _vuex = __webpack_require__(/*! vuex */ 41);function _interopRequireDefault(
                   }
                 } });case 10:case "end":return _context.stop();}}}, _callee);}))();
 
+
+
+
+
+
   },
   methods: _objectSpread(_objectSpread({},
   (0, _vuex.mapActions)(['userLoginAction', 'userLogoutAction'])), {}, {

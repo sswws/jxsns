@@ -254,7 +254,7 @@
 			} else {
 				this.show = true
 			}
-
+			// #ifdef MP-WEIXIN
 			wx.getSetting({
 				success: res => {
 					if (res.authSetting["scope.userInfo"]) {
@@ -273,6 +273,11 @@
 					}
 				}
 			})
+			// #endif
+			// #ifndef MP-WEIXIN
+				this.getUserInfoTag = false
+			// #endif
+			
 		},
 		methods: {
 			...mapActions(['userLoginAction', 'userLogoutAction']),

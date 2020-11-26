@@ -11565,7 +11565,13 @@ var index = {
 var install = function install(Vue, vm) {
   // 此为自定义配置参数，具体参数见上方说明
   Vue.prototype.$u.http.setConfig({
-    baseUrl: "http://47.115.83.135/api/v2", // 请求的本域名
+
+
+
+
+
+    baseUrl: 'http://47.115.83.135/api/v2', // 请求的本域名
+
     // 设置为json，返回后会对数据进行一次JSON.parse()
     dataType: "json",
     showLoading: true, // 是否显示请求中的loading
@@ -11953,12 +11959,12 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD8AAAA/CAYAAABX
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 19));var _md = _interopRequireDefault(__webpack_require__(/*! @/common/md5.js */ 110));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}
-var uploadFile = /*#__PURE__*/function () {var _ref = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(path, size) {var uploadUrl, hash, ufile;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+var uploadFile = /*#__PURE__*/function () {var _ref = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(file) {var uploadUrl, hash, check, ufile;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
             uploadUrl = 'http://47.115.83.135/api/v2';
             // 第一步 获取 hash 值
             _context.next = 3;return new Promise(function (resolve, reject) {
               uni.getFileInfo({
-                filePath: path,
+                filePath: file.path,
                 success: function success(result) {
                   resolve(result.digest);
                 } });
@@ -11968,34 +11974,34 @@ var uploadFile = /*#__PURE__*/function () {var _ref = _asyncToGenerator( /*#__PU
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-              uni.uploadFile({
-                url: uploadUrl + '/files',
-                method: "POST",
+              uni.request({
+                url: uploadUrl + '/files/uploaded/' + _md.default.md5(hash),
+                method: 'GET',
                 header: {
-                  'content-type': 'multipart/form-data',
-                  Authorization: "Bearer " + uni.getStorageSync("token") },
-
-                name: 'file',
-                file: uni.getFileSystemManager().readFileSync(path),
-                filePath: path }));case 6:ufile = _context.sent;return _context.abrupt("return",
+                  "content-type": "application/json",
+                  Accept: "application/json",
+                  Authorization: "Bearer " + uni.getStorageSync("token") } }));case 6:check = _context.sent;
 
 
+            // 如果返回的状态码是404，那说明没有上传过，继续后面的上传流程
+            // 如果返回的是200,那就从body里取出 id，这个id就可以直接使用，后面的上传流程就可以终止了
+            console.log(check[1].statusCode);
 
-            JSON.parse(ufile[1].data));case 8:case "end":return _context.stop();}}}, _callee);}));return function uploadFile(_x, _x2) {return _ref.apply(this, arguments);};}();var _default =
+            // 第三步 将文件以buffer流方式存入系统
+            _context.next = 10;return uni.uploadFile({
+              url: uploadUrl + '/files',
+              method: "POST",
+              header: {
+                'content-type': 'multipart/form-data',
+                Authorization: "Bearer " + uni.getStorageSync("token") },
+
+              name: 'file',
+              file: uni.getFileSystemManager().readFileSync(file.path),
+              filePath: file.path });case 10:ufile = _context.sent;return _context.abrupt("return",
+
+
+
+            JSON.parse(ufile[1].data));case 12:case "end":return _context.stop();}}}, _callee);}));return function uploadFile(_x) {return _ref.apply(this, arguments);};}();var _default =
 
 uploadFile;exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

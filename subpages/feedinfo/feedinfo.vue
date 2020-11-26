@@ -37,11 +37,13 @@
 			comment
 		},
 		async onLoad(params) {
-			// 分享到朋友圈、动态
+			// #ifdef MP-WEIXIN
+			// 微信条件下分享到朋友圈、群组
 			wx.showShareMenu({
 				withShareTicket: true,
 				menus: ['shareAppMessage', 'shareTimeline']
 			})
+			// #endif
 			// 获取动态详情
 			let res = await this.$u.api.getFeedInfo(params)
 			let images = res.data.images.map(one => {

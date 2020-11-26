@@ -345,11 +345,6 @@ var _todoFeed = _interopRequireDefault(__webpack_require__(/*! @/mixins/todoFeed
   (0, _vuex.mapState)(['loginState', 'userInfo'])),
 
   onLoad: function onLoad() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
-              // 在这里注册一个 uniAPP 的顶层事件，用来作为数据通信
-              uni.$on("swiperHeightChange", function (height) {
-                _this.swiperSliderFeedsHeight = height;
-                _this.swiperSliderHeight = height;
-              });
 
               uni.$on('indexUserLogin', function () {
                 _this.currentSwiperIndex = 0;
@@ -386,7 +381,7 @@ var _todoFeed = _interopRequireDefault(__webpack_require__(/*! @/mixins/todoFeed
               // 我们要在这里初始化请求相关数据
               _this.getAdverts();
               _this.getFeedsList();
-              _this.getNewsList();case 9:case "end":return _context.stop();}}}, _callee);}))();
+              _this.getNewsList();case 8:case "end":return _context.stop();}}}, _callee);}))();
 
   },
   onPageScroll: function onPageScroll(event) {
@@ -453,7 +448,13 @@ var _todoFeed = _interopRequireDefault(__webpack_require__(/*! @/mixins/todoFeed
                     name: item.user.name });
 
                 });
-                _this3.feedsList = [].concat(_toConsumableArray(_this3.feedsList), _toConsumableArray(feedList));case 5:case "end":return _context3.stop();}}}, _callee3);}))();
+                _this3.feedsList = [].concat(_toConsumableArray(_this3.feedsList), _toConsumableArray(feedList));
+                // 在这里注册一个 uniAPP 的顶层事件，用来作为数据通信
+                uni.$once("swiperHeightChange", function (height) {
+                  console.log('计算出来的高度为:' + height);
+                  _this3.swiperSliderFeedsHeight = height;
+                  _this3.swiperSliderHeight = height;
+                });case 6:case "end":return _context3.stop();}}}, _callee3);}))();
     },
     // 请求资讯列表数据
     getNewsList: function getNewsList() {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var news, newsList;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.next = 2;return (

@@ -225,7 +225,6 @@ var _uploadFile = _interopRequireDefault(__webpack_require__(/*! @/common/upload
         sizeType: ["compressed"], //可以指定是原图还是压缩图，默认二者都有
         sourceType: ["album", "camera"], //从相册选择
         success: function success(res) {
-          console.log(res.tempFiles);
           _this.uploadPicsList = [].concat(_toConsumableArray(_this.uploadPicsList), _toConsumableArray(res.tempFiles));
           if (_this.uploadPicsList.length > 9) {
             _this.uploadPicsList = _this.uploadPicsList.slice(0, 9);
@@ -285,9 +284,10 @@ var _uploadFile = _interopRequireDefault(__webpack_require__(/*! @/common/upload
 
                 upStatusArr = [];
                 // 循环遍历上传多图
-                _this2.uploadPicsList.map(function (item) {
-                  upStatusArr.push((0, _uploadFile.default)(item.path, item.size));
+                _this2.uploadPicsList.map(function (file) {
+                  upStatusArr.push((0, _uploadFile.default)(file));
                 });
+
                 images = [];_context.next = 17;return (
                   Promise.all(upStatusArr));case 17:_context.sent.map(function (item) {
                   images.push({ id: item.id });
