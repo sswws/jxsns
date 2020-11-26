@@ -3,7 +3,7 @@ Built-By: Generated-by-ADT
 Created-By: Android Gradle 3.2.1
 
 Name: AndroidManifest.xml
-SHA-256-Digest: WzXFrPhc1uvnjCCGvfRZ+iAV44a5WRcDG7cgppU2Yf8=
+SHA-256-Digest: JkcPBjeYZ610Xdy+/YyRs7hE6+9s5bL+BJKFGj89nFk=
 
 Name: androidsupportmultidexversion.txt
 SHA-256-Digest: gi3KDtl7djnYHJxXBKUXJAPnDOAxSe1YbYQyW5pDjkM=
@@ -12,16 +12,16 @@ Name: assets/39285EFA.dex
 SHA-256-Digest: C5wDIIB4it1/WYnQzhReZqRob/OkOw5I3sYL8Yv3VwE=
 
 Name: assets/apps/__UNI__0455FA5/www/manifest.json
-SHA-256-Digest: dBZRgmhaqNux08gIlvi2kjZrBoBVsKjSKlD4MNeEBGg=
+SHA-256-Digest: qHnIj+To35pbqGqyPrjIryD9AgMe42ENL+qEq/WATCA=
 
 Name: assets/data/dcloud_control.xml
-SHA-256-Digest: KnYb8VjVkQ12WrOfbE07Uau4XBBGNO4PM9Adm0ZQiXY=
+SHA-256-Digest: 0YhaqC6/u4E4BA2T3lY/hQ33l+4wNdWfYO0dUt54Fs0=
 
 Name: assets/data/dcloud_error.html
 SHA-256-Digest: B2GRX52m8QbqrWF/8zQJ4yEHrJo+bo5TG5ubChpgODw=
 
 Name: assets/data/dcloud_properties.xml
-SHA-256-Digest: YNrzOQsEbLyStxQmIxwBB4/wwF7p0h/g5+06nehGWDk=
+SHA-256-Digest: TR7XazDZycf4DxNSEBkN4wPWGMm9ayykn78se4CAlkc=
 
 Name: assets/data/dcloud_url.json
 SHA-256-Digest: 3D+YozwmwnltwpSzVIMf1cqXlilfTLOEecgLFF1IB9s=
@@ -87,10 +87,10 @@ Name: assets/supplierconfig.json
 SHA-256-Digest: oBdodUkQj40aoZDOgkeZOFIfCaAYxAXjoTlLhdFCqJY=
 
 Name: assets/uni-jsframework.js
-SHA-256-Digest: 3GNJX5gimARjteHYFPNdd2Z7/p2ggjTVt+WDMOwBR+U=
+SHA-256-Digest: 7VE9EbszOSCI3XjCWImpwThSnvPZxu+p3YGNQUsHIzA=
 
 Name: classes.dex
-SHA-256-Digest: eiQPTHoaOZG56WNyDUV4vaeDQxlXuPVhZP0qgtZCL2U=
+SHA-256-Digest: cZUjbie0dBy+JpTxfy7boyyWgCww1Vd3K0M30+wLYb4=
 
 Name: dc/squareup/okhttp3/internal/publicsuffix/publicsuffixes.gz
 SHA-256-Digest: vo2mhtIIs05LPwv5CqLgt2OClWQRMsPwyqgbA0mQMv8=
@@ -1762,5 +1762,5 @@ Name: res/xml/dcloud_file_provider.xml
 SHA-256-Digest: th1ZathrQxhQhq+C0Q2JeTgLTlG+Rva/3o735wPOZog=
 
 Name: resources.arsc
-SHA-256-Digest: ZGNLenVEXGU3cVn+2YS7bNXRdYIFJ8a4buB7qakeaGI=
+SHA-256-Digest: YcE3N5Z1TW/gcjSD+90huNKmK1X4U/KqOcOfneZA9UY=
 

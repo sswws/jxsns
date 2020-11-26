@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="no"?><manifest xmlns:android="http://schemas.android.com/apk/res/android" android:compileSdkVersion="29" android:compileSdkVersionCodename="10" package="uni.UNI0455FA5" platformBuildVersionCode="100" platformBuildVersionName="1.0.0">
+<?xml version="1.0" encoding="utf-8" standalone="no"?><manifest xmlns:android="http://schemas.android.com/apk/res/android" android:compileSdkVersion="29" android:compileSdkVersionCodename="10" package="jx.sns" platformBuildVersionCode="100" platformBuildVersionName="1.0.0">
     <supports-screens android:anyDensity="true" android:largeScreens="true" android:normalScreens="true" android:resizeable="true" android:smallScreens="true"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -47,7 +47,7 @@
         <activity android:configChanges="fontScale|keyboard|keyboardHidden|mcc|mnc|orientation|screenSize" android:hardwareAccelerated="true" android:label="@string/app_name" android:launchMode="singleTask" android:name="io.dcloud.PandoraEntryActivity" android:screenOrientation="portrait" android:theme="@style/DCloudActivityTheme" android:windowSoftInputMode="adjustResize"/>
         <meta-data android:name="DCLOUD_READ_PHONE_STATE" android:value="once"/>
         <meta-data android:name="DCLOUD_AD_ID" android:value="1.24059148E11"/>
-        <meta-data android:name="DCLOUD_STREAMAPP_CHANNEL" android:value="uni.UNI0455FA5|__UNI__0455FA5|124059150208|common"/>
+        <meta-data android:name="DCLOUD_STREAMAPP_CHANNEL" android:value="jx.sns|__UNI__0455FA5|124059150208|common"/>
         <meta-data android:name="DCLOUD_UNISTATISTICS" android:value="true"/>
         <meta-data android:name="android.notch_support" android:value="true"/>
         <meta-data android:name="notch.config" android:value="portrait"/>
@@ -75,7 +75,7 @@
                 <data android:scheme="package"/>
             </intent-filter>
         </receiver>
-        <provider android:authorities="uni.UNI0455FA5.dc.fileprovider" android:exported="false" android:grantUriPermissions="true" android:name="io.dcloud.common.util.DCloud_FileProvider">
+        <provider android:authorities="jx.sns.dc.fileprovider" android:exported="false" android:grantUriPermissions="true" android:name="io.dcloud.common.util.DCloud_FileProvider">
             <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/dcloud_file_provider"/>
         </provider>
         <meta-data android:name="android.support.VERSION" android:value="26.1.0"/>

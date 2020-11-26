@@ -11570,7 +11570,7 @@ var install = function install(Vue, vm) {
 
 
 
-    baseUrl: 'http://47.115.83.135/api/v2', // 请求的本域名
+    baseUrl: 'http://ts.lagou.uieee.com/api/v2', // 请求的本域名
 
     // 设置为json，返回后会对数据进行一次JSON.parse()
     dataType: "json",

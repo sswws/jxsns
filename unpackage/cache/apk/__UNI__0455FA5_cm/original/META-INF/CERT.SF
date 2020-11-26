@@ -1,10 +1,10 @@
 Signature-Version: 1.0
 Created-By: 1.0 (Android)
-SHA-256-Digest-Manifest: qf0S8SzthY7CKmSBrotjpiEJuKxOpISCNFNSJkLx7Rw=
+SHA-256-Digest-Manifest: JLFJZeqQey7dkEZpXHD5yLjL4CBsUr3bTi44hIed/hY=
 X-Android-APK-Signed: 2
 
 Name: AndroidManifest.xml
-SHA-256-Digest: OR8lFBPxj47xDWELJjf1TGznA6of/e/3T6ieafVTkJw=
+SHA-256-Digest: Y3gY69KlDDdsrIorPuIjggqPX/d2dQBYtdWhv9LAk0o=
 
 Name: androidsupportmultidexversion.txt
 SHA-256-Digest: oNJvc2Kqa1O4jterBsAxxwgy71TuVdViRy6RaIJqgYQ=
@@ -13,16 +13,16 @@ Name: assets/39285EFA.dex
 SHA-256-Digest: n1/EmO48W+6glZObDV+VR5LUfQtIOqCS4l2XQw5uV24=
 
 Name: assets/apps/__UNI__0455FA5/www/manifest.json
-SHA-256-Digest: Olmu795nUG5DytUSGdFgE28RNz3/xSEd4WRQaVKer/M=
+SHA-256-Digest: 3npiYdFDGQ41jOPLkPzadjrXp8zJXvq4xG/zGatlq3w=
 
 Name: assets/data/dcloud_control.xml
-SHA-256-Digest: u8GUBwhjOAIWB9NsW2Cr3ZteLIJ+iiRmdFkddjbNvkM=
+SHA-256-Digest: n5QrEd+WTOuUF+G8xApxQ93fu3oLa99IA6panuIHL8M=
 
 Name: assets/data/dcloud_error.html
 SHA-256-Digest: pDd315GN75oKGVLh9yChFaPJAxMQRKo/OAzwt7SKcT4=
 
 Name: assets/data/dcloud_properties.xml
-SHA-256-Digest: wZkPBEVjWlpjm+17LdbTocZa7AsgTxtuHjmGxemBtBM=
+SHA-256-Digest: h24OfEJaK7SxpKhIxprbjsJK+ETVsKvgP5n/iYMlWeo=
 
 Name: assets/data/dcloud_url.json
 SHA-256-Digest: xcWgesb0oIoahJKjBC5YUqy40oink+fmaPRuk4vZKKo=
@@ -88,10 +88,10 @@ Name: assets/supplierconfig.json
 SHA-256-Digest: 7jysE058d0lHM1+tGqY2CMxLfh5h6RvzJLJ2XxfZuEY=
 
 Name: assets/uni-jsframework.js
-SHA-256-Digest: I56Ax9bIFAoHuZNErb86pdVyUoEDOY+tD7k7IT34oj0=
+SHA-256-Digest: 3wdk0nY5lDpDEb1MYzp1DrS7pmPVPPK7MMP5G48/UPg=
 
 Name: classes.dex
-SHA-256-Digest: uBxBAsO1gGIdLAXwpTiAZAZ5yHmIkb2WLdhyFJhSrJ8=
+SHA-256-Digest: Ra+H//bDtbPZV93DM+/kSBG6q+rRiGSLzbUZqg9qvtI=
 
 Name: dc/squareup/okhttp3/internal/publicsuffix/publicsuffixes.gz
 SHA-256-Digest: RooXV0HbCY7tnQQF8d2T4meu3qnAERAqeEu90A8pm7g=
@@ -1763,5 +1763,5 @@ Name: res/xml/dcloud_file_provider.xml
 SHA-256-Digest: E7V38ndZ/Po80w3/gAkuueFyn6fu8gvG/62VBpa9Qg4=
 
 Name: resources.arsc
-SHA-256-Digest: oaU6Dyxh/JqmMrd09QHk3q41Sgl9fdDEG4JbTyb9jgo=
+SHA-256-Digest: /Vu7wDicQarHoSmwjgLnNwLvtpyInfSGJFsvcG0Osf4=
 
