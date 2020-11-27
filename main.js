@@ -18,7 +18,7 @@ import gotoShare from "@/components/gotoShare/gotoShare.vue";
 Vue.component("goto-share", gotoShare);
 
 
-Vue.prototype.BaseFileURL = 'http://47.115.83.135/api/v2/files/'
+Vue.prototype.BaseFileURL = 'http://ts.lagou.uieee.com/api/v2/files/'
 
 
 // 引入 store 

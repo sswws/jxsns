@@ -1,10 +1,8 @@
 <template>
-	<!-- #ifdef MP-WEIXIN -->
-		<view class="goto-share" v-if="loginState">
-			<!-- 个人分享 选择器 -->
-			<image class="share-img" src="@/static/carm.png" @tap.stop="gotoShare()" mode="aspectFit" />
-		</view>
-	<!-- #endif -->
+	<view class="goto-share" v-if="loginState">
+		<!-- 个人分享 选择器 -->
+		<image class="share-img" src="@/static/carm.png" @tap.stop="gotoShare()" mode="aspectFit" />
+	</view>
 </template>
 
 <script>

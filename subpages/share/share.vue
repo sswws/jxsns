@@ -33,7 +33,6 @@
   </view>
 </template>
 <script>
-	import uploadFile from "@/common/uploadFile.js";
 	export default {
 		data() {
 			return {
@@ -125,11 +124,12 @@
 			  });
 			  
 			  let upStatusArr = [];
-			  // 循环遍历上传多图
-			  this.uploadPicsList.map( file => { 
-				upStatusArr.push(uploadFile(file));
-			  });
 			  
+			  // 循环遍历上传多图
+			  this.uploadPicsList.map(file => { 
+				upStatusArr.push(this.$u.api.uploadFile(file));
+			  });
+
 			  let images = [];
 			  (await Promise.all(upStatusArr)).map((item) => {
 			    images.push({id : item.id});

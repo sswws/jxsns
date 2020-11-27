@@ -1,6 +1,7 @@
 import MD5 from "@/common/md5.js";
 const uploadFile = async file => {
-	let uploadUrl = 'http://47.115.83.135/api/v2'
+	// let uploadUrl = 'http://47.115.83.135/api/v2'
+	let uploadUrl = 'http://ts.lagou.uieee.com/api/v2'
 	// 第一步 获取 hash 值
 	let hash = await new Promise((resolve, reject) => {
 		uni.getFileInfo({

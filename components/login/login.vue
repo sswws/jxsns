@@ -16,30 +16,30 @@
 			</button>
 
 			<u-form :model="form" ref="uForm" v-show="!getUserInfoTag">
-				<u-form-item label="账号" prop="login" label-width="150" required v-if="loginType === 'login'">
+				<u-form-item label="账号" prop="login" label-width="150" required v-if="loginType === 'pwlogin'">
 					<u-input v-model="form.login" placeholder='输入手机号/邮箱/昵称' />
 				</u-form-item>
 
-				<u-form-item label="昵称" prop="name" label-width="150" required v-if="loginType !== 'login'">
+				<u-form-item label="昵称" prop="name" label-width="150" required v-if="loginType === 'phone' || loginType === 'email'">
 					<u-input v-model="form.name" placeholder='2-10个字符' />
 				</u-form-item>
 
-				<u-form-item label="电话" prop="phone" label-width="150" required v-if="loginType === 'phone'">
+				<u-form-item label="电话" prop="phone" label-width="150" required v-if="loginType === 'phone' || loginType === 'codelogin'">
 					<u-input v-model="form.phone" placeholder='输入11位手机号码' />
 				</u-form-item>
 				<u-form-item label="邮箱" prop="email" label-width="150" required v-if="loginType === 'email'">
 					<u-input v-model="form.email" placeholder='输入邮箱' />
 				</u-form-item>
 
-				<u-form-item label="验证码" prop="code" required label-width="150" v-if="loginType !== 'login'">
+				<u-form-item label="验证码" prop="code" required label-width="150" v-if="loginType !== 'pwlogin'">
 					<u-input placeholder="请输入4位验证码" v-model="form.code" type="text"></u-input>
 					<u-button slot="right" type="success" size="mini" @click="getCode">获取验证码</u-button>
 				</u-form-item>
 
-				<u-form-item label="密码" label-width="150" required prop="password">
+				<u-form-item label="密码" label-width="150" required prop="password"  v-if="loginType !== 'codelogin'">
 					<u-input v-model="form.password" type="password" placeholder='限4-20个字符,区分大小写' />
 				</u-form-item>
-				<u-form-item label="重复密码" required label-width="150" prop="repassword" v-if="loginType !== 'login'">
+				<u-form-item label="重复密码" required label-width="150" prop="repassword" v-if="loginType === 'phone' || loginType === 'email'">
 					<u-input v-model="form.repassword" type="password" placeholder='再次输入密码' />
 				</u-form-item>
 				<view class="btns">
@@ -47,7 +47,7 @@
 					<u-button class="ubtn" @click="cancel">取消</u-button>
 				</view>
 				<view class="type">
-					<u-subsection active-color="#007cba" font-size="24" height="52" :list="subsectionList" :current="0" @change="sectionChange"></u-subsection>
+					<u-subsection active-color="#007cba" font-size="20" height="52" :list="subsectionList" :current="0" @change="sectionChange"></u-subsection>
 				</view>
 			</u-form>
 
@@ -73,10 +73,13 @@
 				// 登陆组件是否显示
 				show: false,
 				// 登陆方式
-				loginType: 'login',
+				loginType: 'pwlogin',
 				// 登陆方式选择器
 				subsectionList: [{
-						name: '账号登陆'
+						name: '密码登陆'
+					},
+					{
+						name: '验证码登陆'
 					},
 					{
 						name: '手机注册'
@@ -102,7 +105,7 @@
 				rules: {
 					login: [{
 						validator: (rule, value, callback) => {
-							if (this.loginType === 'login') {
+							if (this.loginType === 'pwlogin') {
 								return !this.$u.test.isEmpty(value)
 							} else {
 								return true
@@ -129,7 +132,7 @@
 						},
 						{
 							validator: (rule, value, callback) => {
-								if (this.loginType !== 'login') {
+								if (this.loginType === 'phone' || this.loginType === 'email') {
 									// 名字长度为 2-10 位
 									return this.$u.test.rangeLength(value, [2, 10])
 								} else {
@@ -143,23 +146,27 @@
 					],
 					phone: [{
 							asyncValidator: (rule, value, callback) => {
-								this.$u.api.findUser({
-									name: value
-								}).then(res => {
-									// 如果验证不通过，需要在callback()抛出new Error('错误提示信息')
-									if (!!value && res.statusCode === 200) {
-										callback(new Error('当前电话已注册'));
-									} else {
-										// 如果校验通过，也要执行callback()回调
-										callback();
-									}
-								})
+								if (this.loginType === 'phone'){
+									this.$u.api.findUser({
+										name: value
+									}).then(res => {
+										// 如果验证不通过，需要在callback()抛出new Error('错误提示信息')
+										if (!!value && res.statusCode === 200) {
+											callback(new Error('当前电话已注册'));
+										} else {
+											// 如果校验通过，也要执行callback()回调
+											callback();
+										}
+									})
+								}else{
+									callback();
+								}
 							},
 							trigger: ['blur'],
 						},
 						{
 							validator: (rule, value, callback) => {
-								if (this.loginType === 'phone') {
+								if (this.loginType === 'codelogin' || this.loginType === 'phone') {
 									// 自带判断 电话号码合法性方法
 									return this.$u.test.mobile(value)
 								} else {
@@ -173,17 +180,21 @@
 					],
 					email: [{
 							asyncValidator: (rule, value, callback) => {
-								this.$u.api.findUser({
-									name: value
-								}).then(res => {
-									// 如果验证不通过，需要在callback()抛出new Error('错误提示信息')
-									if (!!value && res.statusCode === 200) {
-										callback(new Error('当前邮箱已注册'));
-									} else {
-										// 如果校验通过，也要执行callback()回调
-										callback();
-									}
-								})
+								if (this.loginType === 'email'){
+									this.$u.api.findUser({
+										name: value
+									}).then(res => {
+										// 如果验证不通过，需要在callback()抛出new Error('错误提示信息')
+										if (!!value && res.statusCode === 200) {
+											callback(new Error('当前邮箱已注册'));
+										} else {
+											// 如果校验通过，也要执行callback()回调
+											callback();
+										}
+									})
+								}else{
+									callback();
+								}
 							},
 							trigger: ['blur'],
 						},
@@ -203,7 +214,7 @@
 					],
 					code: [{
 						validator: (rule, value, callback) => {
-							if (this.loginType !== 'login') {
+							if (this.loginType !== 'pwlogin') {
 								// 名字长度为 2-10 位
 								return value == '8888'
 							} else {
@@ -215,16 +226,21 @@
 						trigger: ['change', 'blur'],
 					}],
 					password: [{
-						required: true,
-						min: 4,
-						max: 20,
+						validator: (rule, value, callback) => {
+							if (this.loginType !== 'codelogin') {
+								// 名字长度为 2-10 位
+								return (value.length>=4 && value.length<=20)
+							} else {
+								return true
+							}
+						},
 						message: '必填  * 请输入 4-20 位密码',
 						trigger: ['change', 'blur'],
 					}],
 					repassword: [{
 						validator: (rule, value, callback) => {
-							if (this.loginType === 'login' || this.form.password === value) {
-								return true
+							if (this.loginType === 'phone' || this.loginType === 'email') {
+								return this.form.password === value
 							} else {
 								return false
 							}
@@ -340,10 +356,10 @@
 						return false
 					}
 					switch (this.loginType) {
-						case "login":
+						case "pwlogin":
 							let resa = await this.$u.api.userLogin({
 								login: this.form.login,
-								password: this.form.password
+								password: this.form.password,
 							})
 							if (resa.statusCode === 200) {
 								// 登陆成功
@@ -352,6 +368,21 @@
 								uni.showModal({
 									title: '登陆失败',
 									content: resa.data.message
+								})
+							}
+							break;
+						case "codelogin":
+							let resaa = await this.$u.api.userLogin({
+								login: this.form.login,
+								verifiable_code: '8888'
+							})
+							if (resaa.statusCode === 200) {
+								// 登陆成功
+								this.loginAfter(resaa.data.access_token)
+							} else {
+								uni.showModal({
+									title: '登陆失败',
+									content: resaa.data.message
 								})
 							}
 							break;
@@ -438,13 +469,16 @@
 			sectionChange(index) {
 				switch (index) {
 					case 1:
-						this.loginType = "phone";
+						this.loginType = "codelogin";
 						break;
 					case 2:
+						this.loginType = "phone";
+						break;
+					case 3:
 						this.loginType = "email";
 						break;
 					default:
-						this.loginType = "login";
+						this.loginType = "pwlogin";
 						break;
 				}
 			}

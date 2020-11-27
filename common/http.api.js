@@ -1,3 +1,4 @@
+import MD5 from "@/common/md5.js";
 // 此处第二个参数vm，就是我们在页面使用的this，你可以通过vm获取vuex等操作，更多内容详见uView对拦截器的介绍部分：
 // https://uviewui.com/js/http.html#%E4%BD%95%E8%B0%93%E8%AF%B7%E6%B1%82%E6%8B%A6%E6%88%AA%EF%BC%9F
 const install = (Vue, vm) => {
@@ -47,6 +48,52 @@ const install = (Vue, vm) => {
 	api.userLogout = () => vm.$u.post('/auth/logout')
 	// 获取当前登录用户相关通知消息
 	api.getUserMsg = () => vm.$u.get('/user/counts')
+	
+	// 文件上传操作
+	api.uploadFile = async file =>{
+		let rfile = file
+		// #ifdef MP-WEIXIN
+		rfile = uni.getFileSystemManager().readFileSync(file.path)
+		// #endif
+		
+		// 第一步 获取 hash 值
+		let hash = await new Promise((resolve, reject) => {
+			uni.getFileInfo({
+				filePath: file.path,
+				success: (result) => {
+					resolve(result.digest);
+				},
+			});
+		});
+		console.log(hash)
+		
+		// 第二步 请求获取基础文件信息
+		let check = await uni.request({
+		 url: vm.$u.http.config.baseUrl + '/files/uploaded/'+MD5.md5(hash),
+		 method: 'GET',
+		 header: {
+		   "content-type": "application/json",
+		   Accept: "application/json",
+		   Authorization: "Bearer " + uni.getStorageSync("token"),
+		 }
+		})
+		// 如果返回的状态码是404，那说明没有上传过，继续后面的上传流程
+		// 如果返回的是200,那就从body里取出 id，这个id就可以直接使用，后面的上传流程就可以终止了
+		console.log(check[1].statusCode)
+		
+		// 第三步 将文件写入后台系统系统
+		let ufile = await uni.uploadFile({
+			url: vm.$u.http.config.baseUrl + '/files',
+			header: {
+				Authorization: "Bearer " + uni.getStorageSync("token"),
+			},
+			name: 'file',
+			file: rfile,
+			filePath: file.path
+		});
+		console.log(JSON.parse(ufile[1].data))
+		return JSON.parse(ufile[1].data)
+	}
 
 
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下

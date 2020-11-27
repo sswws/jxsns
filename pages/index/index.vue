@@ -508,6 +508,7 @@
 
 				.feed-img {
 					width: 358upx;
+					height: 300upx;
 					border-radius: 10upx;
 				}
 
