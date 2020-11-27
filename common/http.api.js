@@ -56,32 +56,7 @@ const install = (Vue, vm) => {
 		rfile = uni.getFileSystemManager().readFileSync(file.path)
 		// #endif
 		
-		// 第一步 获取 hash 值
-		let hash = await new Promise((resolve, reject) => {
-			uni.getFileInfo({
-				filePath: file.path,
-				success: (result) => {
-					resolve(result.digest);
-				},
-			});
-		});
-		console.log(hash)
-		
-		// 第二步 请求获取基础文件信息
-		let check = await uni.request({
-		 url: vm.$u.http.config.baseUrl + '/files/uploaded/'+MD5.md5(hash),
-		 method: 'GET',
-		 header: {
-		   "content-type": "application/json",
-		   Accept: "application/json",
-		   Authorization: "Bearer " + uni.getStorageSync("token"),
-		 }
-		})
-		// 如果返回的状态码是404，那说明没有上传过，继续后面的上传流程
-		// 如果返回的是200,那就从body里取出 id，这个id就可以直接使用，后面的上传流程就可以终止了
-		console.log(check[1].statusCode)
-		
-		// 第三步 将文件写入后台系统系统
+		// 将文件写入后台系统系统
 		let ufile = await uni.uploadFile({
 			url: vm.$u.http.config.baseUrl + '/files',
 			header: {
