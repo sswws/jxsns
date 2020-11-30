@@ -39,11 +39,11 @@
 
 				<view class="user-tabs">
 					<view class="tab-item left" @tap="gotoLink('/subpages/setting/setting')">
-						<img class="tab-svg" src="@/static/setup_b.png" mode="aspectFit" />
+						<image class="tab-svg" src="@/static/setup_b.png" mode="aspectFit" />
 						<text class="tab-name">个人设置</text>
 					</view>
 					<view class="tab-item" @tap="viewMsg">
-						<img class="tab-svg" src="@/static/bell.png" mode="aspectFit" />
+						<image class="tab-svg" src="@/static/bell.png" mode="aspectFit" />
 						<text class="tab-name">我的消息</text>
 						<text class="badges right" v-if="loginState">{{ userInfo.liked + userInfo.commented }}</text>
 					</view>
@@ -218,7 +218,6 @@
 			},
 			// 路由跳转
 			gotoLink(url) {
-				// 判断当前登录状态，如果处于登陆状态，则定时轮询请求消息数据
 				if (!this.loginState) {
 					this.$refs.login.openLogin()
 					return
@@ -228,7 +227,6 @@
 				})
 			},
 			viewMsg() {
-				// 判断当前登录状态，如果处于登陆状态，则定时轮询请求消息数据
 				if (!this.loginState) {
 					this.$refs.login.openLogin()
 					return

@@ -47,10 +47,13 @@
 				</view>
 
 				<!-- 转发次数统计 -->
+				<!-- #ifdef MP-WEIXIN -->
 				<button class="mbtn mhare" open-type="share">
 					<image class="micon" src="/static/wx.png" mode="aspectFit" />
 					<text class="mtext">分享</text>
 				</button>
+				<!-- #endif -->
+				
 			</view>
 		</view>
 
@@ -111,8 +114,15 @@
 			...mapState(['loginState', 'userInfo'])
 		},
 		async created() {
+			console.log(this.oneInfo)
 			this.oneInfoClone = this.oneInfo
 			this.getCommentsList();
+		},
+		watch:{
+			oneInfo(newVal, oldVal){
+				console.log('数据触发了更新：')
+				console.log(newVal)
+			}
 		},
 		methods: {
 			// 获取评论列表
@@ -351,7 +361,12 @@
 		.minput {
 			background-color: #eee;
 			height: 60upx;
+			// #ifdef MP-WEIXIN
 			width: 300upx;
+			// #endif
+			// #ifndef MP-WEIXIN
+			width: 440upx;
+			// #endif
 			border-radius: 30upx;
 			padding-left: 30upx;
 			margin-left: 20upx;

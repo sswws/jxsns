@@ -1,4 +1,3 @@
-import MD5 from "@/common/md5.js";
 // 此处第二个参数vm，就是我们在页面使用的this，你可以通过vm获取vuex等操作，更多内容详见uView对拦截器的介绍部分：
 // https://uviewui.com/js/http.html#%E4%BD%95%E8%B0%93%E8%AF%B7%E6%B1%82%E6%8B%A6%E6%88%AA%EF%BC%9F
 const install = (Vue, vm) => {
@@ -40,6 +39,10 @@ const install = (Vue, vm) => {
 	// 用户相关 API
 	// 查找用户信息
 	api.findUser = params => vm.$u.get('/users/' + params.name)
+	// 获取注册验证码
+	api.getRegisterCode = params => vm.$u.post('/verifycodes/register', params)
+	// 获取手机号码登录验证码
+	api.getLoginCode = params => vm.$u.post('/verifycodes', params)
 	// 注册
 	api.userRegister = params => vm.$u.post('/users', params)
 	// 登陆

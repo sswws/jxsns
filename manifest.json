@@ -1,5 +1,5 @@
 {
-    "name" : "study",
+    "name" : "jxsns",
     "appid" : "__UNI__0455FA5",
     "description" : "",
     "versionName" : "1.0.0",
@@ -127,7 +127,8 @@
                     }
                 }
             }
-        }
+        },
+        "title" : "jxsns"
     },
     "uniStatistics" : {
         "enable" : false

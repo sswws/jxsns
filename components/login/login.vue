@@ -6,7 +6,8 @@
 			<view class="close-box" @tap="closeLogin" bind:tap="cancel">
 				<image class="close-img" src="/static/close.png" />
 			</view>
-
+			
+			<!-- #ifdef MP-WEIXIN -->
 			<view class="p-name" v-if="getUserInfoTag">
 				前端交流学习中心欢迎你
 			</view>
@@ -14,6 +15,8 @@
 				<image src="/static/wechat.png" class="wechat-img" />
 				<text>一键获取微信信息</text>
 			</button>
+			<!-- #endif  -->
+			
 
 			<u-form :model="form" ref="uForm" v-show="!getUserInfoTag">
 				<u-form-item label="账号" prop="login" label-width="150" required v-if="loginType === 'pwlogin'">
@@ -89,7 +92,12 @@
 					}
 				],
 				// 是否获取用户信息
+				// #ifndef MP-WEIXIN
+				getUserInfoTag : false,
+				// #endif
+				// #ifdef MP-WEIXIN
 				getUserInfoTag: true,
+				// #endif
 				// 用户信息输入框
 				form: {
 					login: '',
@@ -103,8 +111,10 @@
 				},
 				// 用户输入规则校验
 				rules: {
+					// 密码登陆账号校验，该输入可以是：手机号、邮箱、昵称
 					login: [{
 						validator: (rule, value, callback) => {
+							// 只有在 密码登陆 的情况下才需要进行前端规则校验
 							if (this.loginType === 'pwlogin') {
 								return !this.$u.test.isEmpty(value)
 							} else {
@@ -114,58 +124,56 @@
 						message: '必填 * 输入内容不许为空',
 						trigger: ['change', 'blur'],
 					}],
+					// 电话、邮件注册校验
 					name: [{
-							asyncValidator: (rule, value, callback) => {
-								this.$u.api.findUser({
-									name: value
-								}).then(res => {
-									// 如果验证不通过，需要在callback()抛出new Error('错误提示信息')
+							asyncValidator: async (rule, value, callback) => {
+								// 只有在 电话、邮箱注册的时候才会触发该校验规则
+								if (this.loginType === 'phone' || this.loginType === 'email') {
+									let res = await this.$u.api.findUser({ name: value })
 									if (!!value && res.statusCode === 200) {
-										callback(new Error('当前用户昵称已存在'));
+										callback(new Error('当前用户昵称已存在'))
 									} else {
-										// 如果校验通过，也要执行callback()回调
-										callback();
+										callback()
 									}
-								})
+								}else{
+									callback()
+								}
 							},
 							trigger: ['blur'],
 						},
 						{
 							validator: (rule, value, callback) => {
 								if (this.loginType === 'phone' || this.loginType === 'email') {
-									// 名字长度为 2-10 位
 									return this.$u.test.rangeLength(value, [2, 10])
 								} else {
 									return true
 								}
 							},
 							message: '必填 * 昵称长度不得小于2位大于10位',
-							// 触发器可以同时用blur和change
 							trigger: ['change', 'blur'],
 						}
 					],
+					// 手机验证码登陆、手机验证码注册 使用
 					phone: [{
-							asyncValidator: (rule, value, callback) => {
+							asyncValidator: async (rule, value, callback) => {
+								// 只有在手机验证码注册的时候，才需要判断当前手机号码是否已经被注册
 								if (this.loginType === 'phone'){
-									this.$u.api.findUser({
-										name: value
-									}).then(res => {
-										// 如果验证不通过，需要在callback()抛出new Error('错误提示信息')
-										if (!!value && res.statusCode === 200) {
-											callback(new Error('当前电话已注册'));
-										} else {
-											// 如果校验通过，也要执行callback()回调
-											callback();
-										}
-									})
+									let res = await this.$u.api.findUser({ name: value })
+									if (!!value && res.statusCode === 200) {
+										callback(new Error('当前电话已注册'))
+									} else {
+										// 如果校验通过，也要执行callback()回调
+										callback()
+									}
 								}else{
-									callback();
+									callback()
 								}
 							},
 							trigger: ['blur'],
 						},
 						{
 							validator: (rule, value, callback) => {
+								// 手机号码格式判断
 								if (this.loginType === 'codelogin' || this.loginType === 'phone') {
 									// 自带判断 电话号码合法性方法
 									return this.$u.test.mobile(value)
@@ -174,26 +182,23 @@
 								}
 							},
 							message: '必填 * 手机号码输入不正确',
-							// 触发器可以同时用blur和change
 							trigger: ['change', 'blur'],
 						}
 					],
+					// 只有在邮箱 注册的时候才需要使用
 					email: [{
-							asyncValidator: (rule, value, callback) => {
+							asyncValidator: async (rule, value, callback) => {
 								if (this.loginType === 'email'){
-									this.$u.api.findUser({
+									let res = await this.$u.api.findUser({
 										name: value
-									}).then(res => {
-										// 如果验证不通过，需要在callback()抛出new Error('错误提示信息')
-										if (!!value && res.statusCode === 200) {
-											callback(new Error('当前邮箱已注册'));
-										} else {
-											// 如果校验通过，也要执行callback()回调
-											callback();
-										}
 									})
+									if (!!value && res.statusCode === 200) {
+										callback(new Error('当前邮箱已注册'));
+									} else {
+										callback()
+									}
 								}else{
-									callback();
+									callback()
 								}
 							},
 							trigger: ['blur'],
@@ -212,11 +217,12 @@
 							trigger: ['change', 'blur'],
 						}
 					],
+					// 验证码验证
 					code: [{
 						validator: (rule, value, callback) => {
 							if (this.loginType !== 'pwlogin') {
 								// 名字长度为 2-10 位
-								return value == '8888'
+								return value === '8888'
 							} else {
 								return true
 							}
@@ -225,8 +231,10 @@
 						// 触发器可以同时用blur和change
 						trigger: ['change', 'blur'],
 					}],
+					// 密码验证
 					password: [{
 						validator: (rule, value, callback) => {
+							// 除了 手机验证码登陆 其他均需要验证
 							if (this.loginType !== 'codelogin') {
 								// 名字长度为 2-10 位
 								return (value.length>=4 && value.length<=20)
@@ -290,9 +298,6 @@
 				}
 			})
 			// #endif
-			// #ifndef MP-WEIXIN
-				this.getUserInfoTag = false
-			// #endif
 			
 		},
 		methods: {
@@ -327,11 +332,21 @@
 				})
 			},
 			// 获取验证码
-			getCode() {
-				uni.showModal({
-					title: '验证码获取成功',
-					content: '8888'
+			async getCode() {
+				let pcode = await this.$u.api.getLoginCode({
+					phone: this.form.phone
 				})
+				if (!!pcode.data.message && pcode.data.message[0] === "获取成功") {
+					uni.showModal({
+						title: '验证码获取成功',
+						content: '8888'
+					})
+				} else {
+					uni.showModal({
+						title: '验证码获取失败',
+						content: pcode.data.errors.phone[0]
+					})
+				}
 			},
 			// 取消表单输入
 			cancel() {
@@ -373,7 +388,7 @@
 							break;
 						case "codelogin":
 							let resaa = await this.$u.api.userLogin({
-								login: this.form.login,
+								login: this.form.phone,
 								verifiable_code: '8888'
 							})
 							if (resaa.statusCode === 200) {
@@ -399,7 +414,6 @@
 								// 可选，密码，如果不输入密码，允许用户无密码注册。
 								password: this.form.password
 							})
-							console.log(resb)
 							if (resb.statusCode === 201) {
 								// 登陆成功
 								this.loginAfter(resb.data.token)
