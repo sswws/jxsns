@@ -613,9 +613,9 @@
 
 				.title {
 					font-size: 30upx;
-					line-height: 48upx;
+					line-height: 42upx;
 					color: #001432;
-					margin-top: 20upx;
+					margin-top: 21upx;
 				}
 
 				.uinfo {
@@ -626,7 +626,7 @@
 					justify-content: space-between;
 					align-items: center;
 					align-content: center;
-					margin-top: 10upx;
+					margin-top: 6upx;
 					font-size: 20upx;
 					color: #999;
 

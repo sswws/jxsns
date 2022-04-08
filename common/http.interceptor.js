@@ -8,7 +8,7 @@ const install = (Vue, vm) => {
 		
 		// #ifndef H5
 			baseUrl: 'http://ts.lagou.uieee.com/api/v2', // 拉勾服务器
-			// baseUrl: 'http://47.115.83.135/api/v2', // 金迅服务器
+			// baseUrl: 'http://47.115.83.135/api/v2', // 教学服务器
 		// #endif
 		// 设置为json，返回后会对数据进行一次JSON.parse()
 		dataType: "json",
